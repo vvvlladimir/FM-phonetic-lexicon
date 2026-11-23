@@ -1,0 +1,526 @@
+
+=== 1. Row counts per (lang, category, source) ===
+lang  category    source         rows   with_ipa
+----  ----------  -------------  -----  --------
+de    city        geonames       9570   9570    
+de    country     geonames       304    304     
+de    first_name  names-dataset  7850   7850    
+de    last_name   names-dataset  8607   8607    
+de    word        wordfreq       20000  20000   
+en    city        geonames       14409  14409   
+en    country     geonames       459    459     
+en    first_name  names-dataset  7682   7682    
+en    last_name   names-dataset  7942   7942    
+en    word        wordfreq       20000  20000   
+es    city        geonames       7653   7653    
+es    country     geonames       346    346     
+es    first_name  names-dataset  7937   7937    
+es    last_name   names-dataset  7970   7970    
+es    word        wordfreq       20000  20000   
+fr    city        geonames       8424   8424    
+fr    country     geonames       369    369     
+fr    first_name  names-dataset  5000   5000    
+fr    last_name   names-dataset  5000   5000    
+fr    word        wordfreq       20000  19999   
+it    city        geonames       5205   5205    
+it    country     geonames       293    293     
+it    first_name  names-dataset  5000   5000    
+it    last_name   names-dataset  5000   5000    
+it    word        wordfreq       20000  20000   
+nl    city        geonames       6518   6518    
+nl    country     geonames       290    290     
+nl    first_name  names-dataset  5000   5000    
+nl    last_name   names-dataset  5000   5000    
+nl    word        wordfreq       20000  20000   
+pl    city        geonames       6363   6363    
+pl    country     geonames       278    278     
+pl    first_name  names-dataset  5000   5000    
+pl    last_name   names-dataset  5000   5000    
+pl    word        wordfreq       20000  20000   
+pt    city        geonames       8643   8643    
+pt    country     geonames       338    338     
+pt    first_name  names-dataset  8492   8492    
+pt    last_name   names-dataset  8640   8640    
+pt    word        wordfreq       20000  20000   
+ru    city        geonames       18434  18434   
+ru    country     geonames       307    307     
+ru    first_name  names-dataset  5000   5000    
+ru    last_name   names-dataset  5000   5000    
+ru    word        wordfreq       20000  20000   
+tr    city        geonames       4319   4319    
+tr    country     geonames       307    307     
+tr    first_name  names-dataset  5000   5000    
+tr    last_name   names-dataset  5000   5000    
+tr    word        wordfreq       20000  20000   
+
+=== 2. Random samples (10 per category) ===
+
+-- first_name
+lang  text       origin  freq      freq_norm  ipa       
+----  ---------  ------  --------  ---------  ----------
+de    Stefani    DE      1950.000  0.612      ʃteːfaniː 
+fr    Linette    FR      4099.000  0.180      linɛt     
+nl    Jorgen     NL      2108.000  0.579      jɔrɣən    
+pt    Ermesinda  PT      4505.000  0.099      eɾəmɨziŋdɐ
+de    Cvetka     AT      4251.000  0.154      tseːvɛtkɑː
+en    Alby       GB      4181.000  0.164      ælbi      
+es    Elvia      MX      332.000   0.934      elβja     
+it    Den        IT      3317.000  0.345      dɛn       
+pl    Kacpi      PL      1404.000  0.751      katspi    
+ru    Алимхан    RU      5786.000  0.252      aɭʲimxʌn  
+
+-- last_name
+lang  text          origin  freq      freq_norm  ipa       
+----  ------------  ------  --------  ---------  ----------
+pt    Betim         BR      2273.000  0.546      bɨtiŋ     
+en    Mctaggart     GB      3264.000  0.348      məktæɡɑːɹt
+es    Revert        ES      4612.000  0.078      reβeɾt    
+es    Celestino     MX      1561.000  0.688      θelestino 
+pl    Maruszak      PL      3534.000  0.293      maruʃak   
+tr    Zor           TR      869.000   0.838      zɔr       
+de    Lichtenegger  AT      508.000   0.899      lɪçtənɛɡɜ 
+de    Clasen        DE      2382.000  0.524      klɑːzən   
+en    Dial          US      4346.000  0.131      daɪəl     
+fr    Juhel         FR      3793.000  0.241      ʒyɛl      
+
+-- city
+lang  text                       origin  freq        freq_norm  ipa                       
+----  -------------------------  ------  ----------  ---------  --------------------------
+it    Pszczyna                   PL      25288.000   0.567      pistsktsina               
+de    Rummelsburg                DE      25697.000   0.568      rʊməlsbʊɐk                
+ru    Красилов                   UA      18868.000   0.578      krasʲiɭʌf                 
+fr    Petrópolis                 BR      294926.000  0.722      pətʁopoli                 
+en    Hamm                       DE      178967.000  0.710      hæm                       
+nl    West Lake Sammamish        US      33929.000   0.586      ʋɛst laːkə sɑmaːmɪʃ       
+pl    La Línea de la Concepción  ES      64595.000   0.626      la linɛa dɛ la kɔntsɛptɕun
+ru    Калол                      IN      134426.000  0.693      kɑɭʌɭ                     
+ru    Белая Глина                RU      17997.000   0.575      bʲeɭʌja ɡɭʲina            
+pt    Parede                     PT      17212.000   0.543      pɐɾedɨ                    
+
+-- country
+lang  text                    origin  freq          freq_norm  ipa                        
+----  ----------------------  ------  ------------  ---------  ---------------------------
+pl    Mongolia                MN      3568978.000   0.715      mɔŋɡɔlja                   
+nl    Nepal                   NP      29618118.000  0.815      neːpɑl                     
+de    Angola                  AO      39040039.000  0.828      anɡoːlɑː                   
+pt    Síria                   SY      25620427.000  0.808      siɾjɐ                      
+it    Isole Heard e McDonald  HM      0.000         0.000      izole ɛard e ɛmmetʃi donald
+nl    Peru                    PE      34576665.000  0.823      pɪːry                      
+ru    Аландские о-ва          AX      26711.000     0.483      aɭɑntskʲijɪ ovɑ            
+en    UK                      GB      69487000.000  0.856      juːkeɪ                     
+ru    Кот д'Ивуар             CI      32711547.000  0.820      kot divuʌr                 
+en    Kingdom of Sweden       SE      10596620.000  0.766      kɪŋdəm ʌv swiːdən          
+
+-- word
+lang  text             origin  freq   freq_norm  ipa        
+----  ---------------  ------  -----  ---------  -----------
+ru    известная                4.150  0.144      ɪzvʲesnʌja 
+it    equilibrato              3.530  0.031      ekwilibrato
+fr    pme                      4.090  0.177      pm         
+ru    фрагментов               3.700  0.019      fraɡmʲentʌf
+pt    informe                  4.010  0.147      iŋfɔɾəmɨ   
+fr    collectionneurs          3.440  0.028      kɔlɛksjɔnœʁ
+pl    aspekt                   4.020  0.114      aspɛkt     
+pt    corretas                 3.440  0.014      kuʁetɐʃ    
+es    clinton                  3.960  0.131      klinton    
+en    assembly                 4.610  0.300      ɐsɛmbli    
+
+=== 3. Homophone check: same IPA, different spelling (top 20 by frequency) ===
+
+-- en: 6798 distinct spelling pairs total
+text_a     text_b     categories                 ipa         min_freq_norm
+---------  ---------  -------------------------  ----------  -------------
+Lewis      Luis       city,first_name,last_name  luːɪs       0.995        
+Clark      Clarke     first_name,last_name       klɑːɹk      0.994        
+Alan       Allen      city,first_name,last_name  ælən        0.990        
+Stephen    Steven     first_name,last_name       stiːvən     0.989        
+Stewart    Stuart     city,first_name,last_name  stuːɚt      0.985        
+Sara       Sarah      first_name,last_name       sɛɹə        0.981        
+Jo         Joe        first_name,last_name       dʒoʊ        0.979        
+Hernandez  Hernández  first_name,last_name       hɚnændɛz    0.978        
+Ann        Anne       first_name,last_name       æn          0.976        
+Tracey     Tracy      city,first_name,last_name  tɹeɪsi      0.974        
+Claire     Clare      first_name,last_name       klɛɹ        0.972        
+Sean       Shaun      first_name                 ʃɔːn        0.972        
+Brian      Bryan      city,first_name,last_name  bɹaɪən      0.972        
+John       Jon        first_name,last_name       dʒɑːn       0.971        
+Macdonald  Mcdonald   last_name                  məkdɑːnəld  0.970        
+Rodriguez  Rodríguez  first_name,last_name       ɹədɹiːɡɛz   0.969        
+Lopez      López      first_name,last_name       loʊpɛz      0.967        
+Reed       Reid       first_name,last_name       ɹiːd        0.964        
+Gonzalez   González   first_name,last_name       ɡənzɑːlɛz   0.962        
+Sean       Shawn      first_name                 ʃɔːn        0.959        
+
+-- de: 2943 distinct spelling pairs total
+text_a     text_b    categories            ipa       min_freq_norm
+---------  --------  --------------------  --------  -------------
+Schanghai  Shanghai  city                  ʃaŋhaɪ    1.000        
+Mayer      Meyer     first_name,last_name  maɪɜ      0.998        
+Maier      Mayer     first_name,last_name  maɪɜ      0.998        
+Maier      Meyer     first_name,last_name  maɪɜ      0.998        
+Maier      Meier     first_name,last_name  maɪɜ      0.996        
+Mayer      Meier     first_name,last_name  maɪɜ      0.996        
+Meier      Meyer     first_name,last_name  maɪɜ      0.996        
+Maier      Mayr      first_name,last_name  maɪɜ      0.995        
+Mayer      Mayr      first_name,last_name  maɪɜ      0.995        
+Mayr       Meier     first_name,last_name  maɪɜ      0.995        
+Mayr       Meyer     first_name,last_name  maɪɜ      0.995        
+Hoffmann   Hofmann   first_name,last_name  hɔfman    0.994        
+Schmidt    Schmitt   first_name,last_name  ʃmɪt      0.994        
+Maier      Mair      first_name,last_name  maɪɜ      0.990        
+Mair       Mayer     first_name,last_name  maɪɜ      0.990        
+Mair       Mayr      first_name,last_name  maɪɜ      0.990        
+Mair       Meier     first_name,last_name  maɪɜ      0.990        
+Mair       Meyer     first_name,last_name  maɪɜ      0.990        
+Stefan     Stephan   first_name,last_name  ʃteːfɑːn  0.988        
+Günter     Günther   first_name,last_name  ɡʏntɜ     0.986        
+
+-- fr: 14884 distinct spelling pairs total
+text_a     text_b      categories                 ipa      min_freq_norm
+---------  ----------  -------------------------  -------  -------------
+Martin     Martins     first_name,last_name       maʁtɛ̃   0.989        
+Gauthier   Gautier     first_name,last_name       ɡotje    0.986        
+Marc       Marques     first_name,last_name       maʁk     0.976        
+Mathieu    Matthieu    first_name,last_name       matjø    0.972        
+Pascal     Pascale     first_name,last_name       paskal   0.969        
+Li         Ly          first_name,last_name       li       0.968        
+Dupuis     Dupuy       last_name                  dypyi    0.964        
+Ba         Bah         city,first_name,last_name  ba       0.963        
+Michael    Mickael     first_name,last_name       mikaɛl   0.963        
+Renaud     Renault     first_name,last_name       ʁəno     0.962        
+Li         Lie         first_name,last_name       li       0.962        
+Lie        Ly          first_name,last_name       li       0.962        
+Dia        Dias        first_name,last_name       dja      0.960        
+Lahore     Lâhore      city                       laɔʁ     0.959        
+Daniel     Danielle    first_name,last_name       danjɛl   0.958        
+Emmanuel   Emmanuelle  first_name,last_name       ɛmanyɛl  0.958        
+Carine     Karine      first_name,last_name       kaʁin    0.949        
+Chevalier  Chevallier  first_name,last_name       ʃəvalje  0.947        
+Michel     Michelle    first_name,last_name       miʃɛl    0.943        
+Michel     Michèle     first_name,last_name       miʃɛl    0.940        
+
+-- es: 3989 distinct spelling pairs total
+text_a     text_b     categories                 ipa        min_freq_norm
+---------  ---------  -------------------------  ---------  -------------
+Shangai    Shanghai   city                       ʃaŋɡaɪ     1.000        
+Gonzalez   González   first_name,last_name       ɡonθaleθ   0.997        
+Hernandez  Hernández  first_name,last_name       eɾnandeθ   0.996        
+Rodriguez  Rodríguez  city,first_name,last_name  roðɾiɣeθ   0.996        
+Fernandez  Fernández  first_name,last_name       feɾnandeθ  0.996        
+Lopez      López      first_name,last_name       lopeθ      0.996        
+Sanchez    Sánchez    first_name,last_name       santʃeθ    0.995        
+Martinez   Martínez   city,first_name,last_name  maɾtineθ   0.995        
+Perez      Pérez      first_name,last_name       peɾeθ      0.995        
+Gomez      Gómez      first_name,last_name       ɡomeθ      0.993        
+Marta      Martha     first_name,last_name       maɾta      0.992        
+Martin     Martín     first_name,last_name       maɾtin     0.991        
+Jimenez    Jiménez    first_name,last_name       ximeneθ    0.991        
+Mari       Mary       city,first_name,last_name  maɾi       0.988        
+Jose       José       first_name,last_name       xose       0.985        
+Ramirez    Ramírez    first_name,last_name       ramiɾeθ    0.984        
+Gutierrez  Gutiérrez  first_name,last_name       ɡutjereθ   0.981        
+Gimenez    Jimenez    first_name,last_name       ximeneθ    0.980        
+Gimenez    Jiménez    first_name,last_name       ximeneθ    0.980        
+Alvarez    Álvarez    first_name,last_name       alβaɾeθ    0.979        
+
+-- it: 883 distinct spelling pairs total
+text_a     text_b    categories            ipa       min_freq_norm
+---------  --------  --------------------  --------  -------------
+Christian  Cristian  first_name,last_name  kristjan  0.978        
+Mirco      Mirko     first_name,last_name  mirko     0.947        
+Giusi      Giusy     first_name,last_name  dʒuzɪ     0.946        
+Erica      Erika     first_name            ɛrika     0.943        
+Catia      Katia     first_name,last_name  kaːtia    0.933        
+Valter     Walter    first_name,last_name  valter    0.929        
+Sara       Sarah     first_name,last_name  saɾa      0.922        
+Ilenia     Ylenia    first_name            ilenia    0.920        
+Nicholas   Nicolas   first_name            nikolas   0.919        
+Genny      Jenny     first_name            dʒɛnnɪ    0.909        
+Marica     Marika    first_name            marika    0.908        
+Samanta    Samantha  first_name            samanta   0.902        
+Patti      Patty     first_name,last_name  patːɪ     0.898        
+Dani       Dany      first_name,last_name  danɪ      0.896        
+Ruggeri    Ruggieri  last_name             rʊdʒːɛrɪ  0.892        
+Ruggero    Ruggiero  first_name,last_name  rʊdʒːɛro  0.887        
+Gessica    Jessica   first_name            dʒessika  0.885        
+Nico       Niko      first_name,last_name  niko      0.885        
+Monica     Monika    first_name,last_name  mɔnika    0.874        
+Natascia   Natasha   first_name            nataʃa    0.873        
+
+-- pt: 3663 distinct spelling pairs total
+text_a    text_b    categories                 ipa       min_freq_norm
+--------  --------  -------------------------  --------  -------------
+Sousa     Souza     city,first_name,last_name  sowzɐ     0.999        
+Jose      José      first_name,last_name       ʒuzɛ      0.997        
+Joao      João      first_name,last_name       ʒuɐ̃ʊ̃    0.997        
+Luis      Luiz      first_name,last_name       luiʃ      0.996        
+Antonio   António   first_name,last_name       ɐ̃ŋtɔnjʊ  0.994        
+Araujo    Araújo    first_name,last_name       ɐɾɐuʒʊ    0.993        
+Luis      Luís      first_name,last_name       luiʃ      0.989        
+Luiz      Luís      first_name,last_name       luiʃ      0.989        
+Patricia  Patrícia  first_name,last_name       pɐtɹisjɐ  0.988        
+Victor    Vitor     first_name,last_name       vituɹ     0.987        
+Andre     André     first_name,last_name       ɐ̃ŋdɹɛ    0.987        
+Fabio     Fábio     first_name,last_name       fabjʊ     0.987        
+Fatima    Fátima    city,first_name,last_name  fatimɐ    0.985        
+Claudia   Cláudia   first_name,last_name       klaʊdiɐ   0.985        
+Mello     Melo      city,first_name,last_name  mɛlʊ      0.982        
+Ines      Inês      first_name,last_name       ineʃ      0.982        
+Sergio    Sérgio    first_name,last_name       sɛɾəʒjʊ   0.982        
+Manoel    Manuel    first_name,last_name       mɐnuɛl    0.980        
+Catia     Cátia     first_name,last_name       katjɐ     0.977        
+Jessica   Jéssica   first_name,last_name       ʒɛsikɐ    0.977        
+
+-- nl: 2341 distinct spelling pairs total
+text_a       text_b         categories            ipa          min_freq_norm
+-----------  -------------  --------------------  -----------  -------------
+Jansen       Janssen        first_name,last_name  jɑnsən       0.999        
+Peeters      Peters         last_name             peːtərs      0.990        
+Marc         Mark           first_name            mɑrk         0.987        
+Bos          Bosch          last_name             bɔs          0.987        
+Eric         Erik           first_name            ɛrɪk         0.985        
+Bouman       Bouwman        last_name             bʌʊmɑn       0.972        
+Mieke        Mike           first_name            mikə         0.971        
+Hennie       Henny          first_name            hɛni         0.970        
+Visscher     Visser         last_name             vɪsər        0.966        
+Rick         Rik            first_name            rɪk          0.964        
+Jannie       Janny          first_name            jɑni         0.959        
+De Jong      De Jongh       last_name             də jɔŋ       0.953        
+Van Den Bos  Van Den Bosch  last_name             vɑn dɛn bɔs  0.951        
+Teunissen    Theunissen     last_name             tøːnɪsən     0.950        
+Fransen      Franssen       last_name             frɑnsən      0.940        
+De Graaf     De Graaff      last_name             də ɣraːf     0.939        
+Coen         Koen           first_name,last_name  kun          0.939        
+Harrie       Harry          first_name            hɑɾri        0.936        
+Van Es       Van Esch       last_name             vɑn ɛs       0.932        
+Jordi        Jordy          first_name            jɔrdi        0.929        
+
+-- ru: 624 distinct spelling pairs total
+text_a    text_b     categories                 ipa          min_freq_norm
+--------  ---------  -------------------------  -----------  -------------
+Мурад     Мурат      first_name,last_name       murɑt        0.955        
+Ренат     Ринат      first_name                 rʲinɑt       0.952        
+Диман     Димон      first_name                 dʲimʌn       0.901        
+Феруза    Фируза     first_name                 fʲiruza      0.869        
+Камил     Камиль     first_name                 kɑmʲiɭ       0.866        
+Фарид     Фарит      first_name                 farʲit       0.865        
+Илхом     Ильхам     first_name                 ɪɭxʌm        0.838        
+Рамиз     Рамис      first_name                 rɑmʲis       0.836        
+Владимер  Владимир   city,first_name,last_name  vɭadʲimʲir   0.836        
+Рашид     Рашит      city,first_name            raʃyt        0.830        
+Пекин     Пикин      city                       pʲikʲin      0.821        
+Цзинчжоу  Цзиньчжоу  city                       dzʑindʒʲʒou  0.814        
+Сянъян    Сяньян     city                       sʲɑnjjan     0.813        
+Цзинан    Цзинань    city                       dzʑinʌn      0.807        
+Баошан    Баошань    city                       baoʃʌn       0.807        
+Денис     Динис      first_name,last_name       dʲinʲis      0.807        
+Салем     Салим      city,first_name            sɑɭʲim       0.806        
+Камал     Камол      first_name                 kɑmʌɭ        0.780        
+Юлечка    Юличка     first_name                 juɭʲitʃʲka   0.776        
+Гулбарга  Гульбарга  city                       ɡuɭbɑrɡa     0.775        
+
+-- pl: 712 distinct spelling pairs total
+text_a      text_b     categories            ipa        min_freq_norm
+----------  ---------  --------------------  ---------  -------------
+Violetta    Wioletta   first_name            vʲɔlɛtta   0.964        
+Andżelika   Angelika   first_name            andʒɛlika  0.953        
+Viola       Wiola      first_name            vʲɔla      0.934        
+Kulig       Kulik      last_name             kulik      0.916        
+Zaremba     Zaręba     last_name             zarɛmba    0.911        
+Changzhou   Hangzhou   city                  xaŋksxɔu   0.873        
+Kempa       Kępa       last_name             kɛmpa      0.864        
+Valentyna   Walentyna  first_name            valɛntɨna  0.857        
+Vasyl       Wasyl      first_name            vasɨl      0.841        
+Michau      Michał     first_name,last_name  mixaw      0.836        
+Pavlo       Pawlo      first_name            pavlɔ      0.827        
+Olech       Oleh       first_name,last_name  ɔlɛx       0.818        
+Jozef       Jòzef      first_name            jɔzɛf      0.808        
+Andrzelika  Andżelika  first_name            andʒɛlika  0.808        
+Andrzelika  Angelika   first_name            andʒɛlika  0.808        
+Ziemba      Zięba      last_name             ʑɛmba      0.806        
+Tomash      Tomasz     first_name,last_name  tɔmaʃ      0.799        
+Juzek       Józek      first_name            juzɛk      0.798        
+San Jose    San José   city                  san hɔzɛ   0.798        
+Gocha       Goha       first_name            ɡɔxa       0.786        
+
+-- tr: 156 distinct spelling pairs total
+text_a            text_b            categories                 ipa               min_freq_norm
+----------------  ----------------  -------------------------  ----------------  -------------
+Brasilia          Brasília          city                       brasilia          0.752        
+San'a             Sana              city,last_name             sana              0.739        
+Goiania           Goiânia           city                       ɡoiania           0.715        
+Joao Pessoa       João Pessoa       city                       ʒoaɔ pɛssoa       0.651        
+San'a             sana              city,word                  sana              0.625        
+Cuiaba            Cuiabá            city                       dʒuiaba           0.622        
+Florianopolis     Florianópolis     city                       fɫoɾianopolɪs     0.602        
+istanbul          İstanbul          city,word                  ɪstanbʊɫ          0.601        
+Torun             Toruń             city,first_name,last_name  toɾʊn             0.505        
+Aland Adaları     Åland Adaları     country                    aɫand adaɫaɾɯ     0.483        
+izmir             İzmir             city,last_name,word        ɪzmɪr             0.464        
+Celal-Abad        Celalabad         city                       dʒeɫaɫabad        0.458        
+Kabil             Kâbil             city,first_name,last_name  kabɪl             0.449        
+islam             İslam             first_name,last_name,word  ɪsɫam             0.431        
+Saint Barthelemy  Saint Barthélemy  country                    saɪnt barthelæmj  0.428        
+ileri             İleri             last_name,word             ileɾɪ             0.412        
+Hakkari           Hakkâri           city                       hakcaːɾɪ          0.410        
+Işık              ışık              first_name,last_name,word  ɯʃɯk              0.402        
+işler             İşler             last_name,word             ɪʃlɛr             0.385        
+ibrahim           İbrahim           first_name,last_name,word  ɪbrahɪm           0.364        
+
+=== 4. Empty / failed eSpeak output ===
+1 entries without IPA
+lang  category  text  ipa
+----  --------  ----  ---
+fr    word      ent      
+
+=== 5. WikiPron cross-check (eSpeak vs WikiPron, stress/spaces removed) ===
+
+-- en: 18380 distinct texts also in WikiPron; exact match 8305 (45.2%), loose match (no length/diacritics) 11550 (62.8%)
+most frequent words without loose match:
+word   espeak  wikipron variants (compact)      
+-----  ------  ---------------------------------
+or     ɔːɹ     oɹ | ɑɹ | ɚ | ʌɹ | ʔɹ            
+about  ɐbaʊt   əbaʊ̯t | əbæʊ̯t                  
+were   wɜː     wɚ | wɝ                          
+their  ðɛɹ     zɛə | zɛɚ | ðɑː | ðɑːɹ | ðɚ | ðɛɚ
+her    hɜː     hɚ | hɝ | ɚ                      
+than   ðɐn     ðæn | ðən | ðɛn                  
+first  fɜːst   fɚst | fʊːɹs                     
+where  wɛɹ     wɛɚ | ʍeɹ | ʍɛɚ                  
+here   hɪɹ     hiɚ | hɪɚ̯                       
+year   jɪɹ     jiɹ | jɪɚ                        
+
+-- de: 5534 distinct texts also in WikiPron; exact match 1456 (26.3%), loose match (no length/diacritics) 2011 (36.3%)
+most frequent words without loose match:
+word  espeak  wikipron variants (compact)
+----  ------  ---------------------------
+der   dɛɾ     deːr                       
+in    ɪn      ʔɪn                        
+für   fyːɾ    fyːr | fyːɐ̯ | fə | fʏɐ̯   
+eine  aɪnə    nə | ʔaɪ̯nə                
+er    ɛɾ      eːr | ɐ                    
+aber  ɑːbɜ    abɐ | aːbɐ                 
+nach  nɑːx    nax | naːx                 
+wir   viːɾ    mɐ | viːɐ̯ | vɐ            
+war   vɑːɾ    vaːɐ̯                      
+nur   nuːɾ    nuːɐ̯                      
+
+-- fr: 13333 distinct texts also in WikiPron; exact match 10870 (81.5%), loose match (no length/diacritics) 10966 (82.2%)
+most frequent words without loose match:
+word      espeak  wikipron variants (compact)                 
+--------  ------  --------------------------------------------
+qu        k       ky                                          
+lui       lyi     lwi | lɥi                                   
+suis      syi     sɥi | sɥiz                                  
+rien      ʁiɛ̃    ʁjɛ̃                                        
+votre     votʁ    vɔt | vɔtʁ                                  
+depuis    dəpyi   depi | dɑ̃py | dɑ̃pɥi | dəpwi | dəpy | dəpɥi
+notre     notʁ    nɔt | nɔtʁ                                  
+quelques  kɛlkə   kɛlk | kɛlkəz                               
+chose     ʃɔz     ʃoz | ʃoʊ̯z                                 
+puis      pyi     pɥi                                         
+
+-- es: 15336 distinct texts also in WikiPron; exact match 7929 (51.7%), loose match (no length/diacritics) 8218 (53.6%)
+most frequent words without loose match:
+word   espeak  wikipron variants (compact)
+-----  ------  ---------------------------
+todo   toðo    todo                       
+ser    ser     seɾ                        
+hay    aɪ      ai                         
+muy    muj     mui | mwi                  
+todos  toðos   todos                      
+sobre  soβɾe   sobɾe                      
+puede  pweðe   pwede                      
+entre  ɛntɾe   entɾe                      
+desde  desðe   desde                      
+nada   naða    nada                       
+
+-- it: 13869 distinct texts also in WikiPron; exact match 6039 (43.5%), loose match (no length/diacritics) 7214 (52.0%)
+most frequent words without loose match:
+word   espeak  wikipron variants (compact)
+-----  ------  ---------------------------
+dei    deɪ     dej | dɛj                  
+gli    ʎɪ      ʎ | ʎi                     
+cui    kuj     kui                        
+tutti  tutːɪ   tutti                      
+ed     ɛd      ed                         
+tutto  tutːo   tutto                      
+fatto  fatːo   fatto                      
+loro   lɔro    loro                       
+anni   annɪ    anni                       
+degli  deʎɪ    deʎʎi                      
+
+-- pt: 12251 distinct texts also in WikiPron; exact match 1988 (16.2%), loose match (no length/diacritics) 2101 (17.1%)
+most frequent words without loose match:
+word  espeak  wikipron variants (compact)
+----  ------  ---------------------------
+do    dʊ      du                         
+em    eɪŋ     ɐ̃j̃                       
+um    ũŋ     ũ                          
+não   nɐ̃ʊ̃   nɐ̃w̃                      
+no    nʊ      nu                         
+com   kom     kõ                         
+por   puɹ     puɾ                        
+os    ʊʃ      oʃ | uʃ | ɔʃ               
+eu    eʊ      ew | jew                   
+como  komʊ    komu | kumu                
+
+-- nl: 9495 distinct texts also in WikiPron; exact match 5333 (56.2%), loose match (no length/diacritics) 5660 (59.6%)
+most frequent words without loose match:
+word    espeak  wikipron variants (compact)
+------  ------  ---------------------------
+het     hət     t | ət | ɦət | ɦɛt         
+voor    vɔːr    voːr                       
+zijn    zɛɪn    zən | zɛi̯n                
+hij     hɛɪ     ɦɛi̯                       
+bij     bɛɪ     bɛi̯                       
+heeft   heːft   ɦeːft                      
+hebben  hɛbən   ɦɛbə | ɦɛbən               
+meer    mɪːr    meːr                       
+mijn    mɛɪn    mən | mɛi̯n                
+heb     hɛp     ɦɛp                        
+
+-- ru: 17727 distinct texts also in WikiPron; exact match 480 (2.7%), loose match (no length/diacritics) 503 (2.8%)
+most frequent words without loose match:
+word  espeak  wikipron variants (compact)
+----  ------  ---------------------------
+на    nɑ      na | nɐ | nə               
+что   ʃto     t͡ɕto | ʂto                
+как   kɑk     kak | kɐk | kək            
+это   ɛtʌ     ɛtə                        
+за    zɑ      za | zɐ | zə               
+для   dɭʲɑ    dlʲa | dlʲɐ | dlʲə | dlʲɪ  
+так   tɑk     tak                        
+мы    my      mɨ | mˠɨ̠ɪ̯                
+же    ʒɛ      ʐɛ | ʐɨ                    
+ты    ty      t̪ˠɨ | t̪ˠɨ̠ɪ̯             
+
+-- pl: 16060 distinct texts also in WikiPron; exact match 5798 (36.1%), loose match (no length/diacritics) 7637 (47.6%)
+most frequent words without loose match:
+word    espeak  wikipron variants (compact)
+------  ------  ---------------------------
+nie     ɲʲɛ     ɲe | ɲɛ                    
+że      ʒɛ      ʐɛ                         
+czy     tʃɨ     t͡ʂɘ | t͡ʂɨ                
+przez   pʃɛs    pr̝ɛs | pʂɛs               
+są      sɔ̃     sɔw̃                       
+tylko   tɨlkɔ   tɘlkɔ                      
+już     juʃ     juʂ                        
+mnie    mɲʲɛ    mɲɛ                        
+może    mɔʒɛ    mɔʐɛ                       
+bardzo  bardʑɔ  bard͡zɔ                    
+
+-- tr: 4335 distinct texts also in WikiPron; exact match 628 (14.5%), loose match (no length/diacritics) 827 (19.1%)
+most frequent words without loose match:
+word   espeak  wikipron variants (compact)
+-----  ------  ---------------------------
+ve     vɛ      ve                         
+bu     bʊ      bu                         
+için   itʃɪn   it͡ʃin                     
+ile    ilɛ     ile                        
+en     æn      en                         
+gibi   ɟibɪ    ɡibi                       
+kadar  kadar   kɑdɑɾ                      
+her    hɛr     hæɾ                        
+olan   oɫan    oɫɑn                       
+var    var     vɑɾ | vɑːɾ                 

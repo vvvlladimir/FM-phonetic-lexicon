@@ -1,0 +1,127 @@
+
+=== 1. Row counts per (lang, category, source) ===
+lang  category    source         rows   with_ipa
+----  ----------  -------------  -----  --------
+en    city        geonames       14409  14409   
+en    country     geonames       459    459     
+en    first_name  names-dataset  7682   7682    
+en    last_name   names-dataset  7942   7942    
+en    word        wordfreq       20000  20000   
+
+=== 2. Random samples (10 per category) ===
+
+-- first_name
+lang  text         origin  freq      freq_norm  ipa        
+----  -----------  ------  --------  ---------  -----------
+en    Alby         GB      4181.000  0.164      ælbi       
+en    Larisa       GB      1597.000  0.681      lɑːɹɹɪsə   
+en    Madelyn      US      1897.000  0.621      mædəlɪn    
+en    Iosif        GB      3194.000  0.361      aɪəsɪf     
+en    Aguila       US      4540.000  0.092      æɡwɪlə     
+en    Kristina     US      563.000   0.888      kɹɪstiːnə  
+en    Chandrakant  GB      4792.000  0.042      tʃʌndɹækənt
+en    Abdirahman   GB      2207.000  0.559      æbdɚɹɑːmən 
+en    Sixto        US      2963.000  0.408      sɪkstoʊ    
+en    Chandler     US      1463.000  0.708      tʃændlɚ    
+
+-- last_name
+lang  text       origin  freq      freq_norm  ipa       
+----  ---------  ------  --------  ---------  ----------
+en    Mctaggart  GB      3264.000  0.348      məktæɡɑːɹt
+en    Dial       US      4346.000  0.131      daɪəl     
+en    Drew       GB      680.000   0.864      dɹuː      
+en    Wenham     GB      4861.000  0.028      wɛnæm     
+en    Okeefe     GB      2277.000  0.545      oʊkɛf     
+en    Puckett    US      2805.000  0.439      pʌkɪt     
+en    Ferns      GB      3874.000  0.226      fɜːnz     
+en    Luke       GB      1290.000  0.742      luːk      
+en    Ferrer     US      949.000   0.810      fɜːɹɚ     
+en    Younis     GB      2887.000  0.423      jaʊniz    
+
+-- city
+lang  text           origin  freq        freq_norm  ipa            
+----  -------------  ------  ----------  ---------  ---------------
+en    Hamm           DE      178967.000  0.710      hæm            
+en    Floresti       MD      16759.000   0.571      flɔːɹsti       
+en    UC Irvine      US      15807.000   0.568      juːsiː ɜːvaɪn  
+en    Tay Ninh       VN      135254.000  0.694      teɪ nɪn        
+en    Mohács         HU      18711.000   0.578      moʊhɑːks       
+en    Pompano Beach  US      107762.000  0.680      pəmpɑːnoʊ biːtʃ
+en    Lisbon         PT      517802.000  0.773      lɪsbən         
+en    Saint-Laurent  CA      98828.000   0.675      seɪntlɔːɹənt   
+en    Mirano         IT      15139.000   0.565      mɜːɹɑːnoʊ      
+en    Wantagh        US      18871.000   0.578      wɔntɑːɡ        
+
+-- country
+lang  text                         origin  freq          freq_norm  ipa                         
+----  ---------------------------  ------  ------------  ---------  ----------------------------
+en    UK                           GB      69487000.000  0.856      juːkeɪ                      
+en    Kingdom of Sweden            SE      10596620.000  0.766      kɪŋdəm ʌv swiːdən           
+en    San Marino                   SM      34109.000     0.495      sæn mɚɹiːnoʊ                
+en    Algeria                      DZ      47435312.000  0.837      ældʒɪɹiə                    
+en    Martinique                   MQ      432900.000    0.615      mɑːɹtɪniːk                  
+en    Federal Republic of Somalia  SO      19654739.000  0.796      fɛdɚɹəl ɹᵻpʌblɪk ʌv səmɑːliə
+en    Kingdom of Spain             ES      49355143.000  0.839      kɪŋdəm ʌv speɪn             
+en    Albania                      AL      2349580.000   0.695      ælbeɪniə                    
+en    British Virgin Islands       VG      39732.000     0.502      bɹɪɾɪʃ vɜːdʒɪn aɪləndz      
+en    Kingdom of Bahrain           BH      1600366.000   0.677      kɪŋdəm ʌv bɑːɹeɪn           
+
+-- word
+lang  text       origin  freq   freq_norm  ipa        
+----  ---------  ------  -----  ---------  -----------
+en    assembly           4.610  0.300      ɐsɛmbli    
+en    invent             3.570  0.067      ɪnvɛnt     
+en    blonde             4.040  0.173      blɑːnd     
+en    fascists           3.370  0.022      fæʃɪsts    
+en    perceive           3.720  0.101      pɚsiːv     
+en    roots              4.340  0.240      ɹuːts      
+en    gunshot            3.490  0.049      ɡʌnʃɑːt    
+en    dumped             3.900  0.141      dʌmpt      
+en    weekday            3.310  0.009      wiːkdeɪ    
+en    executive          4.870  0.359      ɛɡzɛkjuːtɪv
+
+=== 3. Homophone check: same IPA, different spelling (top 20 by frequency) ===
+
+-- en: 6798 distinct spelling pairs total
+text_a     text_b     categories                                                                                     ipa         min_freq_norm
+---------  ---------  ---------------------------------------------------------------------------------------------  ----------  -------------
+Lewis      Luis       first_name/first_name,first_name/last_name,last_name/last_name,first_name/city,last_name/city  luːɪs       0.995        
+Clark      Clarke     first_name/first_name,first_name/last_name,last_name/last_name                                 klɑːɹk      0.994        
+Alan       Allen      first_name/first_name,first_name/last_name,first_name/city,last_name/city,last_name/last_name  ælən        0.990        
+Stephen    Steven     first_name/first_name,first_name/last_name,last_name/last_name                                 stiːvən     0.989        
+Stewart    Stuart     first_name/last_name,first_name/city,last_name/last_name,last_name/city,first_name/first_name  stuːɚt      0.985        
+Sara       Sarah      first_name/last_name,first_name/first_name                                                     sɛɹə        0.981        
+Jo         Joe        first_name/last_name,last_name/last_name,first_name/first_name                                 dʒoʊ        0.979        
+Hernandez  Hernández  first_name/first_name,first_name/last_name,last_name/last_name                                 hɚnændɛz    0.978        
+Ann        Anne       first_name/first_name,first_name/last_name,last_name/last_name                                 æn          0.976        
+Tracey     Tracy      first_name/first_name,first_name/last_name,first_name/city,last_name/last_name,last_name/city  tɹeɪsi      0.974        
+Claire     Clare      first_name/first_name,first_name/last_name,last_name/last_name                                 klɛɹ        0.972        
+Sean       Shaun      first_name/first_name                                                                          ʃɔːn        0.972        
+Brian      Bryan      first_name/first_name,first_name/last_name,first_name/city,last_name/city,last_name/last_name  bɹaɪən      0.972        
+John       Jon        first_name/first_name,first_name/last_name,last_name/last_name                                 dʒɑːn       0.971        
+Macdonald  Mcdonald   last_name/last_name                                                                            məkdɑːnəld  0.970        
+Rodriguez  Rodríguez  first_name/last_name,last_name/last_name                                                       ɹədɹiːɡɛz   0.969        
+Lopez      López      first_name/first_name,first_name/last_name,last_name/last_name                                 loʊpɛz      0.967        
+Reed       Reid       first_name/last_name,first_name/first_name,last_name/last_name                                 ɹiːd        0.964        
+Gonzalez   González   first_name/last_name,last_name/last_name                                                       ɡənzɑːlɛz   0.962        
+Sean       Shawn      first_name/first_name                                                                          ʃɔːn        0.959        
+
+=== 4. Empty / failed eSpeak output ===
+0 entries without IPA
+
+=== 5. WikiPron cross-check (exact match after removing stress/spaces) ===
+
+-- en: 18380 distinct texts also in WikiPron; exact match 8305 (45.2%), loose match (no length/diacritics) 11550 (62.8%)
+most frequent words without loose match:
+word   espeak  wikipron variants (compact)      
+-----  ------  ---------------------------------
+or     ɔːɹ     oɹ | ɑɹ | ɚ | ʌɹ | ʔɹ            
+about  ɐbaʊt   əbaʊ̯t | əbæʊ̯t                  
+were   wɜː     wɚ | wɝ                          
+their  ðɛɹ     zɛə | zɛɚ | ðɑː | ðɑːɹ | ðɚ | ðɛɚ
+her    hɜː     hɚ | hɝ | ɚ                      
+than   ðɐn     ðæn | ðən | ðɛn                  
+first  fɜːst   fɚst | fʊːɹs                     
+where  wɛɹ     wɛɚ | ʍeɹ | ʍɛɚ                  
+here   hɪɹ     hiɚ | hɪɚ̯                       
+year   jɪɹ     jiɹ | jɪɚ                        
