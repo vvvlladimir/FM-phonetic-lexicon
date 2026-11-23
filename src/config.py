@@ -116,3 +116,14 @@ def espeak_library() -> str | None:
         if Path(p).exists():
             return p
     return None  # let phonemizer find it (works on most Linux installs)
+
+
+# --- Step 2: spelling variants (src/build_variants.py) -----------------------
+
+VARIANT_TOP_N = 2000          # originals per (lang, category), single-token entries only
+VARIANT_CANDIDATES = 40       # candidates generated per original (before checking)
+VARIANT_KEEP = 20             # variants stored per original
+VARIANT_MAX_CHANGES = 3       # letter groups changed per variant
+NEAR_THRESHOLD = 0.80         # PanPhon similarity for a "near" (sounds similar) variant
+ATTESTED_BONUS = 2.0          # score bonus if the spelling exists in names-dataset / entries
+NEIGHBOUR_MAX_DIST = 0.3      # PanPhon distance for similar sounds (p~b 0.04, m~n 0.13)

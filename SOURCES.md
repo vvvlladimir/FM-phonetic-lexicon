@@ -10,9 +10,13 @@ Write these up in the report when you use the database.
 | [WikiPron](https://github.com/CUNY-CL/wikipron) (`data/scrape/tsv`, master) | `reference_pron` only (cross-check) | Wiktionary content, CC BY-SA | Files: see `WIKIPRON_FILES` in `src/config.py`. Russian has only a *narrow* transcription. |
 | [eSpeak NG](https://github.com/espeak-ng/espeak-ng) 1.52.0 via [phonemizer](https://github.com/bootphon/phonemizer) 3.6.0 | `ipa` column | GPL-3.0 (eSpeak NG), GPL-3.0 (phonemizer) | eSpeak generates the IPA with rules. It is not a human transcription. |
 
+| [PanPhon](https://github.com/dmort27/panphon) 0.22.2 (pip) | `variants.similarity` and similar sounds | MIT | Articulatory feature vectors for IPA segments. |
+
 ## Citations
 
 - Remy, P. (2021). *Name Dataset*. https://github.com/philipperemy/name-dataset
 - Speer, R. *wordfreq*. https://github.com/rspeer/wordfreq (cite the version: 3.1.1)
 - Lee, J. L., Ashby, L. F. E., Garza, M. E., et al. (2020). Massively multilingual pronunciation mining with WikiPron. *LREC 2020*.
+- Mortensen, D. R., et al. (2016). PanPhon: A resource for mapping IPA segments to articulatory feature vectors. *COLING 2016*.
+- Bhagat, R., & Hovy, E. (2007). Phonetic models for generating spelling variants. *IJCAI 2007*.
 - Bernard, M., & Titeux, H. (2021). Phonemizer: Text to phones transcription for multiple languages in Python. *JOSS*, 6(68), 3958.

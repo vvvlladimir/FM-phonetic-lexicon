@@ -9,7 +9,7 @@ import logging
 from collections import defaultdict
 
 from . import config
-from .normalize import clean, dedupe
+from .normalize import clean, dedupe, normalize
 
 log = logging.getLogger(__name__)
 SOURCE = "names-dataset"
@@ -55,3 +55,17 @@ def load(langs: list[str], top_n_first: int, top_n_last: int) -> list[dict]:
     del nd
     # same name in e.g. US and GB -> keep the better (lower) rank
     return dedupe(records, higher_is_better=False)
+
+
+def all_spellings() -> set[str]:
+    """Every first/last name spelling in names-dataset (casefolded), ~1.7M strings.
+
+    Used to check whether a generated variant is a spelling real people use.
+    """
+    from names_dataset import NameDataset
+
+    nd = NameDataset()
+    out = {normalize(n).casefold() for n in nd.first_names}
+    out |= {normalize(n).casefold() for n in nd.last_names}
+    del nd
+    return out

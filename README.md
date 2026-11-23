@@ -4,6 +4,8 @@ This builds a multilingual SQLite knowledge base of person names, cities, countr
 
 Languages: en, de, fr, es, it, pt, nl, ru, pl, tr. The sources and their licenses are listed in [SOURCES.md](SOURCES.md).
 
+Step 2 aligns letters to sounds and generates realistic spelling variants (*Philip → Filip, Phillip*; *Pferd → Fert*). All method decisions, with the alternatives considered and the supporting evidence, are in [docs/decisions/](docs/decisions/README.md).
+
 ## Setup
 
 You need Python 3.11+ and eSpeak NG.
@@ -85,6 +87,41 @@ Low agreement is expected because the two use different conventions: broad vs. n
 ## Changing the configuration
 
 To add a country, add it to `COUNTRY_TO_LANG` in `src/config.py`. To add a language, also add its eSpeak voice to `ESPEAK_VOICES`, its script to `LANG_SCRIPT`, and optionally a file to `WIKIPRON_FILES`.
+
+## Step 2: letter↔sound alignment and spelling variants
+
+```bash
+python -m src.build_variants --langs en              # needs the DB from step 1
+python -m src.build_variants                         # all 10 languages, ~8 min
+python -m src.build_variants --top-n 500 --report-path data/report_variants.txt
+```
+
+The script runs these stages for each language:
+
+1. **Align** every single-token entry, using eSpeak's own rule trace (`espeak-ng -X`). Words eSpeak takes from its exception dictionary are aligned with Viterbi instead. See ADR-0004 and ADR-0005.
+2. **Count** how each sound is spelled at the start, middle and end of a word. The result is the `sound_spelling` table.
+3. **Generate** up to 40 candidates for the top `--top-n` entries per category. Possible changes: same-sound respelling, silent letters, letters of a similar sound, and dropped diacritics. See ADR-0006 and ADR-0010.
+4. **Verify** every candidate with eSpeak:
+   - same IPA → `homophone`. Russian uses an unstressed-vowel rule instead (ADR-0008).
+   - PanPhon similarity ≥ 0.80 → `near` (ADR-0007).
+   - Everything else is discarded.
+5. **Rank** the variants. Spellings that exist in names-dataset or in the entries get a bonus (ADR-0009). Up to 20 variants per match type are stored.
+
+New tables:
+
+| table | content |
+|---|---|
+| `g2p_alignment` | `text, lang, method (rules/viterbi), pairs` (JSON `[[letters, sound], …]`) |
+| `sound_spelling` | `lang, sound, sound_ipa, position (B/M/E), letters, count, prob` |
+| `variants` | `text, lang, variant, kinds, match (homophone/near), similarity, score, attested_name, attested_entry, ipa` |
+
+These tables hold derived data and are rebuilt for every language you pass. The report goes to `data/report_variants.txt`. A copy of the full run is in `docs/results/variants_report.txt`. The prototype results that led to these decisions are in `docs/results/prototype_report.txt`.
+
+```sql
+-- realistic same-sound variants of a name, best first
+SELECT variant, kinds, score, attested_name FROM variants
+WHERE lang = 'en' AND text = 'Philip' AND match = 'homophone' ORDER BY score DESC;
+```
 
 ## Example query (homophones)
 

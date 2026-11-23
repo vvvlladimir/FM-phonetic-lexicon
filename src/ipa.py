@@ -18,7 +18,7 @@ log = logging.getLogger(__name__)
 PhonemizeFn = Callable[[list[str]], list[str]]
 
 
-def make_espeak_phonemizer(lang: str) -> PhonemizeFn:
+def make_espeak_phonemizer(lang: str, with_stress: bool = False) -> PhonemizeFn:
     """Create ONE eSpeak backend for `lang` and return a batch phonemize function."""
     from phonemizer.backend import EspeakBackend
     from phonemizer.backend.espeak.wrapper import EspeakWrapper
@@ -33,7 +33,7 @@ def make_espeak_phonemizer(lang: str) -> PhonemizeFn:
     backend = EspeakBackend(
         config.ESPEAK_VOICES[lang],
         preserve_punctuation=False,
-        with_stress=False,
+        with_stress=with_stress,
         language_switch="remove-flags",
         logger=quiet,
     )

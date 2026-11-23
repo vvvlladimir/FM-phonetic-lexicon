@@ -34,6 +34,42 @@ CREATE TABLE IF NOT EXISTS reference_pron (
   UNIQUE(word, lang, ipa)
 );
 CREATE INDEX IF NOT EXISTS idx_ref_word ON reference_pron(lang, word);
+
+-- Step 2: letter <-> sound alignment (docs/decisions/0004, 0005)
+CREATE TABLE IF NOT EXISTS g2p_alignment (
+  text TEXT NOT NULL,
+  lang TEXT NOT NULL,
+  method TEXT NOT NULL,            -- rules (eSpeak -X trace) | viterbi (eSpeak dictionary word)
+  pairs TEXT NOT NULL,             -- JSON [[letters, sound], ...], sound = eSpeak mnemonic
+  PRIMARY KEY (text, lang)
+);
+
+CREATE TABLE IF NOT EXISTS sound_spelling (
+  lang TEXT NOT NULL,
+  sound TEXT NOT NULL,             -- eSpeak mnemonic, '' = silent letters
+  sound_ipa TEXT,                  -- approximate IPA of the sound
+  position TEXT NOT NULL,          -- B (word start) | M | E (word end)
+  letters TEXT NOT NULL,
+  count INTEGER NOT NULL,
+  prob REAL NOT NULL,              -- P(letters | sound, position)
+  PRIMARY KEY (lang, sound, position, letters)
+);
+
+CREATE TABLE IF NOT EXISTS variants (
+  id INTEGER PRIMARY KEY,
+  text TEXT NOT NULL,              -- original (as in entries.text)
+  lang TEXT NOT NULL,
+  variant TEXT NOT NULL,
+  kinds TEXT NOT NULL,             -- comma list: respell, silent, near, deaccent
+  match TEXT NOT NULL,             -- homophone | near
+  similarity REAL NOT NULL,        -- 1 - PanPhon feature distance (1 = same sound)
+  score REAL NOT NULL,             -- log-probability of the spelling changes (+ bonus)
+  attested_name INTEGER NOT NULL,  -- variant spelling exists in names-dataset
+  attested_entry INTEGER NOT NULL, -- variant exists in entries (same lang)
+  ipa TEXT NOT NULL,
+  UNIQUE (text, lang, variant)
+);
+CREATE INDEX IF NOT EXISTS idx_variants_text ON variants(lang, text);
 """
 
 UPSERT = """

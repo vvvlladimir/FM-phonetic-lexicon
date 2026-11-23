@@ -1,0 +1,331 @@
+=== Summary (variants checked by re-running eSpeak: same IPA = hit) ===
+lang  sound level  words  P@10   ≥1 hit in top10  P@100  hits that are real entries  known pairs recall@100
+----  -----------  -----  -----  ---------------  -----  --------------------------  ----------------------
+en    rule         3859   39.0%  78.9%            23.9%  3.7%                        58.2%                 
+en    final        3859   38.1%  79.1%            22.5%  3.8%                        59.3%                 
+de    rule         3916   66.9%  86.2%            55.0%  2.2%                        74.6%                 
+de    final        3916   66.9%  86.3%            53.7%  2.2%                        74.8%                 
+fr    rule         3742   54.5%  89.3%            39.7%  1.3%                        21.0%                 
+fr    final        3742   53.6%  87.2%            39.8%  1.6%                        23.5%                 
+es    rule         3870   78.5%  98.0%            67.7%  2.2%                        79.5%                 
+es    final        3870   77.6%  97.5%            67.2%  2.4%                        79.6%                 
+it    rule         3823   59.7%  62.9%            55.0%  3.4%                        73.4%                 
+it    final        3823   60.5%  67.6%            56.5%  3.0%                        75.7%                 
+pt    rule         3690   43.0%  88.9%            29.3%  3.4%                        60.5%                 
+pt    final        3690   50.2%  91.2%            37.5%  3.1%                        62.7%                 
+nl    rule         3983   54.2%  79.2%            42.8%  3.0%                        69.0%                 
+nl    final        3983   58.9%  84.2%            46.1%  3.0%                        79.2%                 
+ru    rule         3943   12.0%  28.1%            9.3%   3.6%                        32.2%                 
+ru    final        3943   18.5%  51.9%            9.2%   2.0%                        63.8%                 
+pl    rule         3942   70.8%  77.1%            66.9%  2.1%                        71.3%                 
+pl    final        3942   57.9%  78.9%            51.1%  1.7%                        73.4%                 
+tr    rule         3751   44.0%  6.8%             44.0%  18.4%                       15.2%                 
+tr    final        3751   44.5%  7.0%             44.5%  18.2%                       15.2%                 
+
+################ en ################
+single-token texts: 43798 | aligned via eSpeak rules: 81.8% | via Viterbi (eSpeak dictionary words): 17.9% | failed: 0.3%
+
+sounds with most spellings (final level):
+sound  spellings (share)                          
+-----  -------------------------------------------
+eI     ai 28%, a 27%, ay 26%, é 5%, ei 4%, ey 3%  
+aI     i 29%, y 28%, igh 12%, ai 11%, ei 5%, uy 3%
+@      a 73%, o 15%, e 6%, ah 2%, u 2%, r 1%      
+I      i 87%, y 7%, e 5%, ie 0%, ui 0%, ey 0%     
+
+Philip  /fɪlɪp/   alignment: ph→f i→I l→l i→I p→p
+   same sound : Filip, Phillip, Fillip, Philyp, Filyp, Phillyp
+   sound differs (filtered out): Phylip /faɪlɪp/, Fylip /faɪlɪp/, Philep /faɪləp/
+
+Catherine  /kæθɹɪn/   alignment: c→k a→a th→T e→∅ r→r in→I2n e→∅
+   same sound : Katherine
+   sound differs (filtered out): Catherene /kæθɚɹɛn/, Katherene /kæθɚɹɛn/, Cartherine /kɑːɹθɚɹiːn/
+
+Stephen  /stiːvən/   alignment: s→s t→t e→i: p→v h→∅ en→@n
+   same sound : -
+   sound differs (filtered out): Stevhen /stɛvhən/, Stephon /stɛfɑːn/, Stevhon /stɛvhɑːn/
+
+Michael  /maɪkəl/   alignment: mi→maI ch→k a→@ e→∅ l→L
+   same sound : -
+   sound differs (filtered out): Michoel /mɪtʃoʊl/, Mikael /mɪkeɪl/, Micael /mɪkeɪl/
+
+Jackson  /dʒæksən/   alignment: j→dZ a→a ck→k s→s on→@n
+   same sound : Jakson, Jacson, Jacksan, Jacksen, Jaksan, Jacsan, Jaksen
+   sound differs (filtered out): Gackson /ɡæksən/, Jackcon /dʒækkən/, Gakson /ɡæksən/
+
+################ de ################
+single-token texts: 42276 | aligned via eSpeak rules: 91.2% | via Viterbi (eSpeak dictionary words): 8.5% | failed: 0.2%
+
+sounds with most spellings (final level):
+sound  spellings (share)                        
+-----  -----------------------------------------
+k      k 61%, c 22%, ck 9%, g 6%, ch 1%, q 1%   
+(de)   y 18%, s 17%, t 8%, dge 8%, nce 6%, l 5% 
+i:     i 74%, ie 21%, y 4%, ih 1%, ieh 1%, ea 0%
+E      e 84%, ä 13%, er 3%, ae 0%, ai 0%        
+
+Philipp  /fiːlɪp/   alignment: ph→f i→i: l→l i→I p→p p→∅
+   same sound : Filipp, Phielipp, Fielipp, Vielipp
+   sound differs (filtered out): Philibp /fiːlɪpp/, Filibp /fiːlɪpp/, Vilipp /viːlɪp/
+
+Meyer  /maɪɜ/   alignment: m→m ey→aI er→3
+   same sound : Meier, Maier, Mayer
+   sound differs (filtered out): -
+
+pferd  /pfeːɾt/   alignment: pf→pF er→e:r d→t
+   same sound : -
+   sound differs (filtered out): pfert /pfɛɾt/, pferth /pfɛɾt/, pferdt /pfɛɾt/
+
+Schmidt  /ʃmɪt/   alignment: sch→S m→m i→I dt→t
+   same sound : Schmith
+   sound differs (filtered out): Schmit /ʃmiːt/, Smidt /smɪt/, Smit /smiːt/
+
+Katharina  /katariːnɑː/   alignment: ka→ka th→t a→a r→R i→i: na→nA:
+   same sound : -
+   sound differs (filtered out): Katarina /kɑtariːnɑː/, Kathariena /katarɪɛnɑː/, Katariena /kɑtarɪɛnɑː/
+
+################ fr ################
+single-token texts: 34745 | aligned via eSpeak rules: 91.6% | via Viterbi (eSpeak dictionary words): 7.5% | failed: 0.9%
+
+sounds with most spellings (final level):
+sound  spellings (share)                        
+-----  -----------------------------------------
+(fr)   y 40%, ing 8%, th 6%, l 6%, k 5%, ke 5%  
+E      e 60%, ai 12%, è 5%, el 5%, ait 3%, ei 2%
+(en    m 9%, s 9%, n 9%, b 7%, k 6%, c 5%       
+(e     s 17%, m 10%, a 8%, b 7%, f 6%, g 6%     
+
+Philippe  /filip/   alignment: ph→f i→i l→l i→i p→∅ p→p e→∅
+   same sound : Filippe, Philyppe, Phylippe, Filyppe, Fylippe, Phyllippe, Fyllippe, Phylyppe
+   sound differs (filtered out): Phillippe /fijip/, Fillippe /fijip/, Phillyppe /fijip/
+
+Thierry  /tjɛʁi/   alignment: t→t hi→j e→E rr→r y→i
+   same sound : Thierri, Thierris
+   sound differs (filtered out): Thiery /θiəɹi/, Tillerry /tɪləɹi/, Tillery /tɪləɹi/
+
+Rousseau  /ʁuso/   alignment: r→r ou→u ss→s eau→o
+   same sound : Rousso, Rouceau, Roussaud, Roussau, Rouçeau
+   sound differs (filtered out): Rouseau /ʁuzo/, Rouso /ʁuzo/, Rouco /ʁuko/
+
+Bordeaux  /bɔʁdo/   alignment: b→b o→O r→r d→d eau→o x→∅
+   same sound : Bordaux
+   sound differs (filtered out): Bordox /bɔʁdɔks/, Bonrdeaux /bɔ̃ʁdo/, Bonrdox /bɔ̃ʁdɔks/
+
+Mathieu  /matjø/   alignment: m→m a→a th→t i→∅ eu→jY
+   same sound : Mathieux, Mattieu, Mattieux
+   sound differs (filtered out): Matieu /masjø/, Matieux /masjø/
+
+################ es ################
+single-token texts: 36565 | aligned via eSpeak rules: 96.9% | via Viterbi (eSpeak dictionary words): 2.9% | failed: 0.3%
+
+sounds with most spellings (final level):
+sound  spellings (share)               
+-----  --------------------------------
+k      c 76%, k 15%, qu 8%, ck 1%, q 1%
+s      s 99%, x 0%, ç 0%, ps 0%        
+u      u 95%, ú 4%, ü 1%               
+j      i 99%, y 0%, hi 0%              
+
+Felipe  /felipe/   alignment: f→f e→e l→l i→i p→p e→e
+   same sound : Felípe, Felipé, Félipe, Phelipe, Felype, Felípé, Félípe, Phelípe
+   sound differs (filtered out): -
+
+Javier  /xaβjeɾ/   alignment: j→x a→a v→B i→j e→e r→r
+   same sound : Jabier, Jávier, Javiér, Jábier, Jabiér, Jáviér
+   sound differs (filtered out): Gavier /ɡaβjeɾ/, Gabier /ɡaβjeɾ/, Gávier /ɡaβjeɾ/
+
+Vázquez  /baθkeθ/   alignment: v→b á→a z→T qu→k e→e z→T
+   same sound : Vazquez, Bázquez, Bazquez
+   sound differs (filtered out): Vázcez /baθθeθ/, Vazcez /baθθeθ/, Vácquez /bakkeθ/
+
+Guillermo  /ɡiʎeɾmo/   alignment: g→g u→∅ i→i ll→l^ e→e r→r m→m o→o
+   same sound : Guillermó, Guíllermo, Guillérmo, Guíllermó, Guillérmó, Guíllérmo
+   sound differs (filtered out): Guillerno /ɡiʎeɾno/, Ghuillermo /ɡwiʎeɾmo/, Guyllermo /ɡujʎeɾmo/
+
+Sevilla  /seβiʎa/   alignment: s→s e→e v→B i→i ll→l^ a→a
+   same sound : Sebilla, Sevílla, Sebílla, Xevilla, Sévilla, Xebilla, Sébilla, Sevylla
+   sound differs (filtered out): -
+
+################ it ################
+single-token texts: 32478 | aligned via eSpeak rules: 96.3% | via Viterbi (eSpeak dictionary words): 3.3% | failed: 0.3%
+
+sounds with most spellings (final level):
+sound  spellings (share)                    
+-----  -------------------------------------
+a      a 99%, à 1%, á 0%, ai 0%, ha 0%, u 0%
+i      i 98%, y 1%, ì 0%, í 0%, e 0%, a 0%  
+k      c 78%, k 13%, ch 8%, q 1%, ck 0%     
+k:     cc 57%, cch 28%, ck 13%, kk 2%       
+
+Filippo  /filipːo/   alignment: f→f i→i l→l i→i pp→p: o→o
+   same sound : Philippo, Filyppo, Fylippo, Philyppo, Phylippo, Fylyppo, Phylyppo
+   sound differs (filtered out): -
+
+Giovanni  /dʒovannɪ/   alignment: gi→dZ o→o v→v a→a n→n n→n i→I
+   same sound : Jovanni, Giovanny, Jovanny
+   sound differs (filtered out): Govanni /ɡovannɪ/, Govanny /ɡovannɪ/
+
+Chiara  /kjaɾa/   alignment: ch→k i→j a→a r→* a→a
+   same sound : Kiara, Chyara, Chiarà, Kyara, Kiarà, Chyarà
+   sound differs (filtered out): Ciara /tʃaɾa/, Cyara /tʃjaɾa/, Ciarà /tʃaɾa/
+
+Ghirardelli: not in DB sample
+
+Napoli  /napolɪ/   alignment: n→n a→a p→p o→o l→l i→I
+   same sound : -
+   sound differs (filtered out): Napoly /napɔlɪ/
+
+################ pt ################
+single-token texts: 38146 | aligned via eSpeak rules: 84.2% | via Viterbi (eSpeak dictionary words): 15.6% | failed: 0.2%
+
+sounds with most spellings (final level):
+sound  spellings (share)                         
+-----  ------------------------------------------
+s      s 47%, c 33%, ç 16%, x 2%, sc 1%, ss 0%   
+eIN    en 82%, em 12%, ên 5%, ém 1%, én 0%, êm 0%
+k      c 78%, k 16%, qu 3%, ck 2%, q 0%          
+aU     au 79%, ao 16%, áu 3%, ál 2%              
+
+Filipe  /filipɨ/   alignment: f→f i→i l→l i→i p→p e→y
+   same sound : Filípe, Fílipe, Philipe, Filype, Fylipe, Fílípe, Philípe
+   sound differs (filtered out): Filepe /filɛpɨ/, Felipe /felipɨ/, Fílepe /filɨpɨ/
+
+Gonçalves  /ɡuŋsɑlvɨʃ/   alignment: g→g on→uN ç→s a→A l→l v→v e→y s→s#
+   same sound : Gonsalves
+   sound differs (filtered out): Goncalves /ɡulsɑlvɨʃ/, Guonçalves /ɡwuŋsɑlvɨʃ/, Guoncalves /ɡwuŋkɑlvɨʃ/
+
+João  /ʒuɐ̃ʊ̃/   alignment: j→Z o→u ão→&U~
+   same sound : Juam, Júão, Júam
+   sound differs (filtered out): Juão /ʒwɐ̃ʊ̃/, Joam /ʒoɐ̃ʊ̃/, Goão /ɡuɐ̃ʊ̃/
+
+Conceição  /kuŋseɪsɐ̃ʊ̃/   alignment: c→k on→uN c→s ei→eI ç→s ão→&U~
+   same sound : Conceiçam, Conseição, Conçeição, Konceição, Conseiçam, Conçeiçam
+   sound differs (filtered out): Conceicão /kuŋseɪkɐ̃ʊ̃/, Conceisão /kuŋseɪzɐ̃ʊ̃/, Conceicam /kuŋseɪkɐ̃ʊ̃/
+
+Lisboa  /liʒboɐ/   alignment: l→l i→i s→Z b→b o→o a→&
+   same sound : Lijboa, Lisbôa, Lizboa, Lijbôa, Lysboa
+   sound differs (filtered out): Ligboa /liɡboɐ/, Lísboa /liʒbuɐ/, Lesboa /leʒboɐ/
+
+################ nl ################
+single-token texts: 33523 | aligned via eSpeak rules: 93.5% | via Viterbi (eSpeak dictionary words): 6.5% | failed: 0.0%
+
+sounds with most spellings (final level):
+sound  spellings (share)                              
+-----  -----------------------------------------------
+S      ch 33%, sh 27%, ti 13%, sj 12%, ci 10%, che 2% 
+s      s 92%, c 6%, z 1%, sch 0%, sc 0%, t 0%         
+k      k 72%, c 25%, ck 2%, q 0%, que 0%, ch 0%       
+VU     ou 54%, au 26%, ouw 15%, auw 2%, ao 2%, aauw 0%
+
+philip  /filɪp/   alignment: ph→f i→i l→l i→I p→p
+   same sound : filip, phielip, fielip, philib, filib, phylip, fylip, phielib
+   sound differs (filtered out): phileep /fileːp/, fileep /fileːp/
+
+Sjoerd  /ʃurt/   alignment: sj→S oe→u r→r d→t
+   same sound : Sjoert, Choerd, Choert, Shoerd, Shoert, Sjoerdt, Sjoerth, Choerdt
+   sound differs (filtered out): -
+
+Huijgens  /hœyjɣəns/   alignment: h→h ui→Wy j→j g→Q ens→@ns
+   same sound : Huijggens
+   sound differs (filtered out): -
+
+Gerrit  /ɣɛɾrɪt/   alignment: ge→QE rr→*r i→I t→t
+   same sound : Gerrid, Gerryt, Gerridt, Gerrith, Gerryd, Gerrydt, Gerryth
+   sound differs (filtered out): Gerreet /ɣɛɾreːt/, Gerreed /ɣɛɾreːt/, Gerreedt /ɣɛɾreːt/
+
+Utrecht  /ɵtrɛxt/   alignment: u→8 t→t r→r e→E ch→x t→t
+   same sound : Utrechd, Uthrecht, Utregt, Utrechdt, Utrechth, Uthrechd, Utregd, Uthregt
+   sound differs (filtered out): -
+
+################ ru ################
+single-token texts: 43569 | aligned via eSpeak rules: 90.6% | via Viterbi (eSpeak dictionary words): 9.4% | failed: 0.0%
+
+sounds with most spellings (final level):
+sound  spellings (share)  
+-----  -------------------
+v      в 94%, г 6%, ф 0%  
+V      о 71%, а 24%, я 5% 
+Z      ж 99%, ш 0%, з 0%  
+y      ы 62%, и 25%, е 13%
+
+Филипп  /fʲiɭʲipp/   alignment: ф→f; и→i л→l; и→i п→p п→p
+   same sound : Филипб, Фелипп, Фелипб, Филибп, Филибб, Фелибп
+   sound differs (filtered out): Филепп /fʲiɭʲepp/, Филепб /fʲiɭʲepp/, Фелепп /fʲiɭʲepp/
+
+Наталья  /natɑɭjja/   alignment: н→n а→a т→t а→A л→l ь→j я→ja
+   same sound : Наталъя
+   sound differs (filtered out): Наталйя /natɑɭjʌ/, Натялья /natʲɑɭjja/, Надалья /nadɑɭjja/
+
+Алексей  /aɭʲiksʲej/   alignment: а→a л→l; е→i к→k с→s; е→e й→j
+   same sound : -
+   sound differs (filtered out): Аликсей /aɭʲiksʲij/, Алегсей /aɭʲeksʲij/, Алигсей /aɭʲiksʲij/
+
+молоко  /mʌɭʌko/   alignment: м→m о→V л→l о→V к→k о→o
+   same sound : -
+   sound differs (filtered out): молако /mʌɭɑkʌ/, малоко /maɭokʌ/, малако /maɭɑkʌ/
+
+Ольга  /oɭɡa/   alignment: о→o л→l ь→∅ г→g а→a#
+   same sound : -
+   sound differs (filtered out): Олька /oɭka/
+
+################ pl ################
+single-token texts: 33895 | aligned via eSpeak rules: 98.5% | via Viterbi (eSpeak dictionary words): 1.5% | failed: 0.0%
+
+sounds with most spellings (final level):
+sound  spellings (share)                       
+-----  ----------------------------------------
+E      e 96%, ę 4%, ö 0%, ø 0%, ä 0%, ai 0%    
+i      i 99%, ü 0%, í 0%, ee 0%, ea 0%, si 0%  
+S      sz 59%, rz 33%, ż 5%, sh 3%, š 0%, ch 0%
+k      k 97%, g 2%, c 1%, q 0%, gh 0%, ck 0%   
+
+Filip  /filip/   alignment: f→f i→i l→l i→i p→p
+   same sound : Filib, Philip, Philib
+   sound differs (filtered out): Wilip /vilip/, Wilib /vilip/
+
+Grzegorz  /ɡʒɛɡɔʃ/   alignment: g→g rz→Z e→E g→g o→O rz→S
+   same sound : Grzegosz, Gżegorz, Gżegosz, Grzegoż, Gżegoż, Grzegosh, Gżegosh
+   sound differs (filtered out): -
+
+Wójcik  /vujtɕik/   alignment: w→v ó→u j→j c→ts; i→i k→k
+   same sound : Wujcik, Wójciik, Wujciik, Wójcig, Wujcig, Vójcik, Wójciig, Vujcik
+   sound differs (filtered out): Wóicik /vuitɕik/, Wuicik /vuitɕik/
+
+Krzysztof  /kʃɨʃtɔf/   alignment: k→k rz→S y→y sz→S t→t o→O f→f
+   same sound : Krzysztow, Kszysztof, Kszysztow, Krzyrztof, Krzyrztow, Kszyrztof, Kszyrztow, Krzyżtof
+   sound differs (filtered out): Krzyszdof /kʃɨʒdɔf/, Krzyszdow /kʃɨʒdɔf/, Kżysztof /ɡʒɨʃtɔf/
+
+Łódź  /wutɕ/   alignment: ł→w ó→u dź→ts;
+   same sound : Łóć, Łudź, Łuć
+   sound differs (filtered out): -
+
+################ tr ################
+single-token texts: 31434 | aligned via eSpeak rules: 97.1% | via Viterbi (eSpeak dictionary words): 2.9% | failed: 0.0%
+
+sounds with most spellings (final level):
+sound  spellings (share)         
+-----  --------------------------
+:      ğ 87%, ğu 8%, ğa 5%, ğo 0%
+a      a 100%, â 0%              
+I      i 100%, î 0%              
+k      k 100%, q 0%              
+
+Filiz  /filɪz/   alignment: f→f i→i l→l iz→Iz
+   same sound : -
+   sound differs (filtered out): -
+
+Şahin  /ʃahɪn/   alignment: ş→S a→a h→h in→In
+   same sound : -
+   sound differs (filtered out): -
+
+Yılmaz  /jɯɫmaz/   alignment: y→j ı→@ l→L m→m a→a z→z
+   same sound : -
+   sound differs (filtered out): -
+
+Gökhan  /ɟœkhan/   alignment: g→J ö→W k→k h→h a→a n→n
+   same sound : -
+   sound differs (filtered out): -
+
+Çağlar  /tʃaːɫar/   alignment: ç→tS a→a ğ→: lar→LaR
+   same sound : Çağalar
+   sound differs (filtered out): Çağular /tʃaːuɫar/
