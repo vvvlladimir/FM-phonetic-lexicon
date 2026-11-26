@@ -7,3 +7,5 @@ data/*.db-wal
 data/*.db-shm
 data/*.log
 .DS_Store
+
+local-docs/
