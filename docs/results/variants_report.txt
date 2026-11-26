@@ -3,11 +3,11 @@
 
 lang  texts  aligned by rules  by viterbi  originals  ≥1 same-sound variant  ≥1 similar variant  candidates that sound same  stored that are real spellings  known pairs found  mean plausibility names  mean plausibility words
 ----  -----  ----------------  ----------  ---------  ---------------------  ------------------  --------------------------  ------------------------------  -----------------  -----------------------  -----------------------
-en    43958  82%               18%         7824       89%                    99%                 12%                         21%                             69%                0.33                     0.05                   
+en    43958  82%               18%         7824       89%                    99%                 12%                         21%                             69%                0.32                     0.05                   
 de    42478  91%               9%          8006       88%                    99%                 12%                         19%                             76%                0.30                     0.06                   
-fr    34925  92%               8%          7700       96%                    100%                17%                         21%                             59%                0.33                     0.08                   
-es    36727  97%               3%          7831       99%                    99%                 13%                         18%                             81%                0.31                     0.05                   
-it    32650  96%               3%          7809       87%                    100%                8%                          16%                             82%                0.29                     0.05                   
+fr    34925  92%               8%          7700       96%                    100%                17%                         22%                             59%                0.33                     0.08                   
+es    36727  97%               3%          7831       99%                    99%                 13%                         19%                             81%                0.31                     0.05                   
+it    32650  96%               3%          7809       87%                    100%                8%                          17%                             82%                0.28                     0.05                   
 pt    38334  84%               16%         7529       94%                    100%                10%                         15%                             70%                0.29                     0.04                   
 nl    33720  93%               7%          8110       85%                    99%                 10%                         19%                             84%                0.31                     0.06                   
 ru    43744  91%               9%          8038       89%                    100%                8%                          6%                              80%                0.18                     0.05                   
@@ -15,15 +15,15 @@ pl    34076  99%               1%          8009       81%                    100
 tr    31619  97%               3%          7644       6%                     100%                1%                          18%                             47%                0.26                     0.08                   
 
 ################ en: reference examples ################
-original  variant  expected     kind  known spelling  similarity  plausibility
---------  -------  -----------  ----  --------------  ----------  ------------
-Philip    Fillipp  realistic    name  False           1.000       0.085       
-Philip    Phillip  realistic    name  True            1.000       1.000       
-Stephen   Steven   realistic    name  True            1.000       1.000       
-house     hause    unrealistic  word  False           0.740       0.000       
+original  variant  expected     kind  known as  similarity  plausibility
+--------  -------  -----------  ----  --------  ----------  ------------
+Philip    Fillipp  realistic    name  -         1.000       0.085       
+Philip    Phillip  realistic    name  name      1.000       1.000       
+Stephen   Steven   realistic    name  name      1.000       1.000       
+house     hause    unrealistic  word  -         0.740       0.000       
 
 ################ en ################
-stored variants by kind: homophone_deaccent=26, homophone_near=1005, homophone_respell=29809, homophone_silent=9987, near_deaccent=33, near_near=103543, near_respell=86286, near_silent=52179
+stored variants by kind: homophone_deaccent=26, homophone_near=1005, homophone_respell=29809, homophone_silent=9987, near_deaccent=33, near_near=103546, near_respell=86275, near_silent=52165
 
 sounds with the most spellings:
 sound      spellings (share)                          
@@ -54,16 +54,16 @@ Thompson  /tɑːmpsən/   th→ɾ o→ɑː m→m p→p s→s on→ən
    similar    : Thonpson* 0.97 (near, sim 0.97), Thompzon* 0.97 (near, sim 0.97), Tompsone 0.26 (respell,silent, sim 0.88), Tompcon 0.23 (respell, sim 0.96), Tompsane 0.23 (respell,silent, sim 0.88)
 
 ################ de: reference examples ################
-original  variant  expected     kind  known spelling  similarity  plausibility
---------  -------  -----------  ----  --------------  ----------  ------------
-pferd     fert     unrealistic  word  False           0.800       0.018       
-pferd     ferd     unrealistic  word  False           0.820       0.008       
-pferd     fährt    real word    word  True            0.810       0.566       
-Meyer     Meier    realistic    name  True            1.000       1.000       
-Philipp   Filip    realistic    name  True            0.980       0.983       
+original  variant  expected     kind  known as  similarity  plausibility
+--------  -------  -----------  ----  --------  ----------  ------------
+pferd     fert     unrealistic  word  -         0.800       0.018       
+pferd     ferd     unrealistic  word  -         0.820       0.008       
+pferd     fährt    real word    word  word      0.810       0.566       
+Meyer     Meier    realistic    name  name      1.000       1.000       
+Philipp   Filip    realistic    name  name      0.980       0.983       
 
 ################ de ################
-stored variants by kind: homophone_deaccent=14, homophone_near=2047, homophone_respell=32318, homophone_silent=496, near_deaccent=506, near_near=135620, near_respell=93073, near_silent=8548
+stored variants by kind: homophone_deaccent=14, homophone_near=2047, homophone_respell=32318, homophone_silent=496, near_deaccent=506, near_near=135618, near_respell=93044, near_silent=8548
 
 sounds with the most spellings:
 sound      spellings (share)                        
@@ -94,7 +94,7 @@ Katharina  /katariːnɑː/   ka→ka th→t a→a r→r i→iː na→nA:
    similar    : Katarina* 1.00 (respell, sim 1.00), Kathalina* 0.99 (near, sim 0.99), Katalina* 0.98 (respell,near, sim 0.98), Katariena 0.26 (respell, sim 0.89), Katerrina 0.21 (respell,near, sim 0.99)
 
 ################ fr ################
-stored variants by kind: homophone_deaccent=43, homophone_near=778, homophone_respell=37881, homophone_silent=21828, near_deaccent=486, near_near=109475, near_respell=72355, near_silent=61263
+stored variants by kind: homophone_deaccent=43, homophone_near=778, homophone_respell=37881, homophone_silent=21828, near_deaccent=486, near_near=109469, near_respell=72359, near_silent=61249
 
 sounds with the most spellings:
 sound    spellings (share)                        
@@ -125,7 +125,7 @@ Mathieu  /matjø/   m→m a→a th→t i→∅ eu→jø
    similar    : Madieu* 0.99 (near, sim 0.99), Mathier* 0.99 (near, sim 0.99), Matieu* 0.98 (respell, sim 0.98), Matii* 0.98 (respell,near, sim 0.98), Matheu* 0.95 (silent, sim 0.95)
 
 ################ es ################
-stored variants by kind: homophone_deaccent=6, homophone_near=1533, homophone_respell=30908, homophone_silent=13277, near_deaccent=115, near_near=135067, near_respell=63250, near_silent=60730
+stored variants by kind: homophone_deaccent=6, homophone_near=1533, homophone_respell=30908, homophone_silent=13277, near_deaccent=115, near_near=135079, near_respell=63256, near_silent=60657
 
 sounds with the most spellings:
 sound    spellings (share)               
@@ -156,7 +156,7 @@ Sevilla  /seβiʎa/   s→s e→e v→β i→i ll→ʎ a→a
    similar    : Sibilla* 0.99 (near,respell, sim 0.99), Seville* 0.99 (near, sim 0.99), Sevillo* 0.99 (near, sim 0.99), Cevilla* 0.99 (near, sim 0.99), Sebille* 0.99 (respell,near, sim 0.99)
 
 ################ it ################
-stored variants by kind: homophone_deaccent=22, homophone_near=15, homophone_respell=15842, homophone_silent=12616, near_deaccent=45, near_near=144465, near_respell=36616, near_silent=82634
+stored variants by kind: homophone_deaccent=22, homophone_near=15, homophone_respell=15842, homophone_silent=12616, near_deaccent=45, near_near=144473, near_respell=36600, near_silent=82597
 
 sounds with the most spellings:
 sound      spellings (share)                    
@@ -185,7 +185,7 @@ Napoli  /napolɪ/   n→n a→a p→p o→o l→l i→ɪ
 Ghirardelli: not in DB
 
 ################ pt ################
-stored variants by kind: homophone_deaccent=46, homophone_near=3330, homophone_respell=24248, homophone_silent=6816, near_deaccent=303, near_near=119153, near_respell=85486, near_silent=59445
+stored variants by kind: homophone_deaccent=46, homophone_near=3330, homophone_respell=24248, homophone_silent=6816, near_deaccent=303, near_near=119157, near_respell=85464, near_silent=59408
 
 sounds with the most spellings:
 sound        spellings (share)                         
@@ -205,7 +205,7 @@ Gonçalves  /ɡuŋsɑlvɨʃ/   g→ɡ on→uŋ ç→s a→A l→l v→v e→ɨ s
 
 João  /ʒuɐ̃ʊ̃/   j→ʒ o→u ão→ɐ̃ʊ̃
    same sound : Juam* 1.00, Joao* 1.00, Joãoh 0.12, Júam 0.04, Júão 0.01
-   similar    : Juão* 0.98 (respell, sim 0.98), Joam* 0.98 (respell, sim 0.98), Shoam* 0.97 (near,respell, sim 0.97), Soam* 0.95 (near,respell, sim 0.95), Goam* 0.92 (respell, sim 0.92)
+   similar    : Juão* 0.98 (respell, sim 0.98), Joam* 0.98 (respell, sim 0.98), Shoam* 0.97 (near,respell, sim 0.97), Goam* 0.92 (respell, sim 0.92), Guam* 0.92 (respell, sim 0.92)
 
 Conceição  /kuŋseɪsɐ̃ʊ̃/   c→k on→uŋ c→s ei→eɪ ç→s ão→ɐ̃ʊ̃
    same sound : Conseição* 1.00, Conçeição* 1.00, Conceicao* 1.00, Conceiçam 0.21, Conseiçam 0.18, Conçeiçam 0.18, Conseiçãoh 0.14, Konceiçam 0.14
@@ -216,7 +216,7 @@ Lisboa  /liʒboɐ/   l→l i→i s→ʒ b→b o→o a→ɐ
    similar    : Lesboa* 0.99 (near, sim 0.99), Ligboa 0.26 (respell, sim 0.96), Ligboah 0.17 (respell,silent, sim 0.93), Lijboah 0.15 (respell,silent, sim 0.97), Ligpoa 0.14 (respell,near, sim 0.95)
 
 ################ nl ################
-stored variants by kind: homophone_deaccent=22, homophone_near=1371, homophone_respell=26935, homophone_silent=448, near_deaccent=41, near_near=136778, near_respell=97696, near_silent=9871
+stored variants by kind: homophone_deaccent=22, homophone_near=1371, homophone_respell=26935, homophone_silent=448, near_deaccent=41, near_near=136780, near_respell=97699, near_silent=9872
 
 sounds with the most spellings:
 sound      spellings (share)                              
@@ -247,7 +247,7 @@ Utrecht  /ɵtrɛxt/   u→ɵ t→t r→r e→ɛ ch→x t→t
    similar    : Udrechd 0.13 (near,respell, sim 0.99), Utlechd 0.13 (near,respell, sim 0.98), Oetrechd 0.13 (near,respell, sim 0.98), Utrichd 0.13 (near,respell, sim 0.99), Usrechd 0.12 (near,respell, sim 0.99)
 
 ################ ru ################
-stored variants by kind: homophone_near=8132, homophone_respell=17631, homophone_silent=1187, near_near=141361, near_respell=113221, near_silent=4350
+stored variants by kind: homophone_near=8132, homophone_respell=17631, homophone_silent=1187, near_near=141365, near_respell=113202, near_silent=4348
 
 sounds with the most spellings:
 sound    spellings (share)  
@@ -262,7 +262,7 @@ sound    spellings (share)
    similar    : Филепб 0.24 (respell, sim 0.99), Фелепб 0.23 (respell, sim 0.99), Филепп 0.20 (respell, sim 0.99), Фелепп 0.20 (respell, sim 0.99), Вилепб 0.17 (near,respell, sim 0.99)
 
 Наталья  /natɑɭjja/   н→n а→ɑ т→t а→ɑ л→ɭ ь→j я→ja
-   same sound : Наталье 0.08, Ноталья 0.06, Наталъя 0.02
+   same sound : Наталье* 0.50, Ноталья 0.06, Наталъя 0.02
    similar    : Неталья* 0.98 (near, sim 0.98), Наталйя 0.35 (respell, sim 0.88), Наталйе 0.16 (respell,near, sim 0.88), Наталйй 0.16 (respell,near, sim 0.88), Натарйя 0.16 (near,respell, sim 0.87)
 
 Алексей  /aɭʲiksʲej/   а→ɑ л→ɭʲ е→i к→k с→sʲ е→e й→j
@@ -275,10 +275,10 @@ sound    spellings (share)
 
 Ольга  /oɭɡa/   о→o л→ɭ ь→∅ г→ɡ а→a
    same sound : Олга* 1.00
-   similar    : Олька* 0.99 (near, sim 0.99), Орка* 0.97 (near,silent,respell, sim 0.97), Орга 0.12 (near,silent, sim 0.98), Олка 0.12 (silent,near, sim 0.99), Олха 0.12 (silent,near, sim 0.98)
+   similar    : Олька* 0.99 (near, sim 0.99), Орка* 0.97 (near,silent,respell, sim 0.97), Ольге* 0.48 (near, sim 0.97), Орга 0.12 (near,silent, sim 0.98), Олка 0.12 (silent,near, sim 0.99)
 
 ################ pl ################
-stored variants by kind: homophone_deaccent=15, homophone_near=3359, homophone_respell=15511, homophone_silent=17, near_deaccent=1819, near_near=143527, near_respell=84171, near_silent=177
+stored variants by kind: homophone_deaccent=15, homophone_near=3359, homophone_respell=15511, homophone_silent=17, near_deaccent=1819, near_near=143527, near_respell=84098, near_silent=177
 
 sounds with the most spellings:
 sound    spellings (share)                       
@@ -309,7 +309,7 @@ Krzysztof  /kʃɨʃtɔf/   k→k rz→ʃ y→ɨ sz→ʃ t→t o→ɔ f→f
    similar    : Lodz* 0.84 (deaccent, sim 0.84), Juć 0.26 (near,respell, sim 0.97), Łyć 0.21 (near,respell, sim 0.98), Łoć 0.21 (near,respell, sim 0.97), Jóć 0.20 (near,respell, sim 0.97)
 
 ################ tr ################
-stored variants by kind: homophone_deaccent=10, homophone_respell=518, homophone_silent=2, near_deaccent=3619, near_near=74783, near_respell=7679, near_silent=607
+stored variants by kind: homophone_deaccent=10, homophone_respell=518, homophone_silent=2, near_deaccent=3619, near_near=74783, near_respell=7677, near_silent=607
 
 sounds with the most spellings:
 sound    spellings (share)         

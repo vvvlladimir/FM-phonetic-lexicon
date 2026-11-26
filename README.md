@@ -116,15 +116,38 @@ New tables:
 |---|---|
 | `g2p_alignment` | `text, lang, method (rules/viterbi), pairs` (JSON `[[letters, sound], …]`) |
 | `sound_spelling` | `lang, sound, sound_ipa, position (B/M/E), letters, count, prob` |
-| `variants` | `text, lang, kind (name/word), variant, kinds, match (homophone/near), similarity, logp, n_changes, known_spelling, plausibility, ipa` |
+| `variants` | `text, lang, kind (name/word), variant, kinds, match (homophone/near), similarity, logp, n_changes, known_as (name/word/NULL), plausibility, ipa` |
 
 These tables hold derived data and are rebuilt for every language you pass. The report goes to `data/report_variants.txt`. A copy of the full run is in `docs/results/variants_report.txt`. The prototype results that led to these decisions are in `docs/results/prototype_report.txt`.
 
 ```sql
 -- realistic same-sound variants of a name, best first
-SELECT variant, match, plausibility, known_spelling FROM variants
+SELECT variant, match, plausibility, known_as FROM variants
 WHERE lang = 'en' AND text = 'Philip' ORDER BY plausibility DESC;
 ```
+
+## Step 3: scoring API for the TTS–STT pipeline
+
+`src/lexicon.py` scores any (original, candidate) pair, including STT output the DB has never seen. It needs the DB from steps 1 and 2. See ADR-0013.
+
+```python
+from src.lexicon import Lexicon
+lex = Lexicon()                                    # data/lexicon.db, ~4 s start-up
+lex.score("Philip", "Fillipp", "en").plausibility   # 0.085  realistic (name spelling)
+lex.score("Pferd", "Fert", "de").plausibility       # 0.018  unrealistic (known word)
+lex.rerank("Hak", [("Haag", 0.97), ("hack", 0.95)], "de", textclass="NAME", weight=1.0)
+```
+
+```bash
+python -m src.lexicon de Pferd Fert fährt Ferd       # table; --json for machine output
+```
+
+The parts work as follows:
+
+- **IPA** comes from `entries`, then `ipa_cache`, then eSpeak. eSpeak is called in one batch, and its result is stored in `ipa_cache`, so a repeated call is instant.
+- **An unknown original** is aligned with `espeak-ng -X` on the fly and stored in `g2p_alignment`.
+- **`rerank`** sorts by `plausibility**weight × own_score`, so the pipeline's acoustic similarity can be combined with ours. Candidates equal to the original are dropped.
+- **Pipeline text classes** are mapped by `config.TEXTCLASS_TO_KIND`: `NAME`→name, `NATURAL_TEXT`→word.
 
 ## Example query (homophones)
 

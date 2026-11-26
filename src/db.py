@@ -66,12 +66,24 @@ CREATE TABLE IF NOT EXISTS variants (
   similarity REAL NOT NULL,        -- 1 - PanPhon feature distance (1 = same sound)
   logp REAL NOT NULL,              -- sum of log P(letters | sound) over changed groups
   n_changes INTEGER NOT NULL,      -- changed letter groups
-  known_spelling INTEGER NOT NULL, -- variant is a real name (kind=name) / real word (kind=word)
+  known_as TEXT,                   -- name | word | NULL: the variant is a real name / real word
   plausibility REAL NOT NULL,      -- 0..1, see src/plausibility.py and ADR-0012
   ipa TEXT NOT NULL,
   UNIQUE (text, lang, variant)
 );
 CREATE INDEX IF NOT EXISTS idx_variants_text ON variants(lang, text);
+
+-- On-demand API (src/lexicon.py, ADR-0013)
+CREATE TABLE IF NOT EXISTS ipa_cache (  -- IPA of texts that are not in entries (e.g. STT output)
+  text TEXT NOT NULL,
+  lang TEXT NOT NULL,
+  ipa TEXT NOT NULL,
+  PRIMARY KEY (text, lang)
+);
+
+CREATE TABLE IF NOT EXISTS known_names (  -- names-dataset spellings, casefolded (fast to load)
+  spelling TEXT PRIMARY KEY
+) WITHOUT ROWID;
 """
 
 UPSERT = """
@@ -98,7 +110,7 @@ def connect(path: Path | str) -> sqlite3.Connection:
 def _migrate(conn: sqlite3.Connection) -> None:
     """`variants` is derived data: drop it if it has an old column layout."""
     cols = {r[1] for r in conn.execute("PRAGMA table_info(variants)")}
-    if cols and "plausibility" not in cols:
+    if cols and "known_as" not in cols:
         conn.execute("DROP TABLE variants")
 
 

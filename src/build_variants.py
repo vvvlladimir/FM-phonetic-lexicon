@@ -151,9 +151,9 @@ def run_lang(conn, lang, args, known, pool) -> dict:
                 if sim < config.NEAR_THRESHOLD:
                     continue
                 match = "near"
-            is_known = known.is_known(c.text, kind, lang)
-            pl = plausibility(kind, is_known, freq_norm, c.score, c.n_changes, sim)
-            scored[match].append((pl, c, sim, is_known, v_ipa))
+            known_as = known.known_as(c.text, kind, lang)
+            pl = plausibility(kind, known_as, freq_norm, c.score, c.n_changes, sim)
+            scored[match].append((pl, c, sim, known_as, v_ipa))
         metrics["originals"] += 1
         metrics["candidates"] += len(cs)
         metrics["cand_homophone"] += sum((w, c.text) in homo for c in cs)
@@ -161,12 +161,12 @@ def run_lang(conn, lang, args, known, pool) -> dict:
             lst.sort(key=lambda x: -x[0])  # most plausible first (ADR-0012)
             keep = lst[:args.keep]
             metrics[f"has_{match}"] += bool(keep)
-            for pl, c, sim, is_known, v_ipa in keep:
+            for pl, c, sim, known_as, v_ipa in keep:
                 rows.append((w, lang, kind, c.text, ",".join(c.kinds), match, round(sim, 4),
-                             round(c.score, 4), c.n_changes, int(is_known), round(pl, 4), v_ipa))
-                stored[w].append((match, c.text, ",".join(c.kinds), round(sim, 3), is_known, pl))
+                             round(c.score, 4), c.n_changes, known_as, round(pl, 4), v_ipa))
+                stored[w].append((match, c.text, ",".join(c.kinds), round(sim, 3), known_as, pl))
                 metrics[f"stored_{match}"] += 1
-                metrics[f"attested_{match}"] += is_known
+                metrics[f"attested_{match}"] += known_as is not None
                 metrics[f"pl_{kind}_sum"] += pl
                 metrics[f"pl_{kind}_n"] += 1
                 for k in c.kinds:
@@ -179,7 +179,7 @@ def run_lang(conn, lang, args, known, pool) -> dict:
     with conn:
         conn.execute("DELETE FROM variants WHERE lang = ?", (lang,))
         conn.executemany("INSERT INTO variants (text, lang, kind, variant, kinds, match, similarity, "
-                         "logp, n_changes, known_spelling, plausibility, ipa) "
+                         "logp, n_changes, known_as, plausibility, ipa) "
                          "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", rows)
     log.info("[%s] stored %d variants in %.0f s", lang, len(rows), time.time() - t0)
     examples = evaluate_examples(lang, texts, aligned, table, neighbours, known, phonemize)
@@ -213,9 +213,9 @@ def evaluate_examples(lang, texts, aligned, table, neighbours, known, phonemize)
         sim = similarity(texts[w]["ipa"], v_ipa)
         kind = kind_of(texts[w]["cats"])
         lp, ch = explain_variant(var, aligned[w][1], table, neighbours)
-        is_known = known.is_known(var, kind, lang)
-        pl = plausibility(kind, is_known, texts[w]["cats"].get("word", 0.0), lp, ch, sim)
-        out.append((w, var, expected, kind, is_known, round(sim, 2), round(pl, 3)))
+        known_as = known.known_as(var, kind, lang)
+        pl = plausibility(kind, known_as, texts[w]["cats"].get("word", 0.0), lp, ch, sim)
+        out.append((w, var, expected, kind, known_as or "-", round(sim, 2), round(pl, 3)))
     return out
 
 
@@ -252,7 +252,7 @@ def format_report(results: dict) -> str:
                         f"{m['pl_word_sum'] / m['pl_word_n']:.2f}" if m["pl_word_n"] else "-"))
         if r["examples"]:
             p(f"\n################ {lang}: reference examples ################")
-            p(_table(r["examples"], ["original", "variant", "expected", "kind", "known spelling",
+            p(_table(r["examples"], ["original", "variant", "expected", "kind", "known as",
                                      "similarity", "plausibility"]))
         p(f"\n################ {lang} ################")
         kinds = sorted({k[len('kind_'):] for k in m if k.startswith("kind_")})
@@ -301,7 +301,11 @@ def main(argv=None) -> int:
         log.error("no entries with IPA in %s - run `python -m src.build_db` first", args.db_path)
         return 2
     log.info("loading names-dataset spellings (for the 'real spelling' check)")
-    known = load_known(conn, all_spellings())
+    names = all_spellings()
+    with conn:  # cached for src.lexicon, which then starts in ~1 s instead of loading 3 GB
+        conn.execute("DELETE FROM known_names")
+        conn.executemany("INSERT OR IGNORE INTO known_names VALUES (?)", ((n,) for n in names))
+    known = load_known(conn, names)
     results = {}
     with ProcessPoolExecutor(max_workers=os.cpu_count()) as pool:
         for lang in args.langs:

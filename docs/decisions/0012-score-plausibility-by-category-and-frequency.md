@@ -6,7 +6,7 @@ decision-makers: project author
 
 # Score plausibility by category and frequency: names vary, known words do not
 
-Supersedes ADR-0009.
+Supersedes ADR-0009. Refined by ADR-0013: a variant is known as `name`, `word` or neither, and a name heard as ordinary words gets its own prior of 0.5.
 
 ## Context and Problem Statement
 
@@ -77,7 +77,7 @@ Results with the full DB:
 * Good: the same function can score candidates produced by the TTS–STT pipeline, not only our own variants.
 * Bad: the constants (0.6, 0.7, 0.02–0.10, Zipf 3.0) are set by hand to match the two reference cases and common sense. They are not fitted to data. When labelled pipeline output or survey ratings exist, they should be fitted.
 * Bad: the absolute value of an unknown name spelling is low (Fillipp ≈ 0.08). The scale is meaningful for *ranking*, not as a probability.
-* The `variants` table changed: `attested_name` and `attested_entry` were replaced by `kind`, `known_spelling`, `logp`, `n_changes` and `plausibility`. `db.connect` drops an old-layout `variants` table automatically, since it is derived data.
+* The `variants` table changed: `attested_name` and `attested_entry` were replaced by `kind`, `known_as`, `logp`, `n_changes` and `plausibility`. `db.connect` drops an old-layout `variants` table automatically, since it is derived data.
 
 ### Confirmation
 

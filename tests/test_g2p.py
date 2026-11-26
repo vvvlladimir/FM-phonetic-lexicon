@@ -160,9 +160,9 @@ def test_ru_unstressed_vowels():
 
 def test_variants_table_unique():
     conn = db.connect(":memory:")
-    row = ("Philip", "en", "name", "Filip", "respell", "homophone", 1.0, -0.5, 1, 1, 0.6, "fɪlɪp")
+    row = ("Philip", "en", "name", "Filip", "respell", "homophone", 1.0, -0.5, 1, "name", 0.6, "fɪlɪp")
     sql = ("INSERT INTO variants (text, lang, kind, variant, kinds, match, similarity, logp, "
-           "n_changes, known_spelling, plausibility, ipa) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)")
+           "n_changes, known_as, plausibility, ipa) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)")
     conn.execute(sql, row)
     with pytest.raises(Exception):
         conn.execute(sql, row)

@@ -92,6 +92,16 @@ class Table:
             self.by_graph_pos[(g, pos)][s] += 1
             self.by_sound[(s, pos)][g] += 1
 
+    @classmethod
+    def from_rows(cls, rows) -> "Table":
+        """Rebuild from stored `sound_spelling` rows (sound, position, letters, count)."""
+        t = cls()
+        for s, pos, g, k in rows:
+            t.by_sound[(s, pos)][g] += k
+            t.by_graph[g][s] += k
+            t.by_graph_pos[(g, pos)][s] += k
+        return t
+
     def alternatives(self, s: str, pos: str, min_count: int = 3, min_p: float = 0.01):
         c = self.by_sound.get((s, pos))
         if not c:

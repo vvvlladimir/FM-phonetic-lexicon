@@ -130,7 +130,18 @@ NEIGHBOUR_MAX_DIST = 0.3      # PanPhon distance for similar sounds (p~b 0.04, m
 # Plausibility (src/plausibility.py, ADR-0012): prior x typicality x similarity
 PRIOR_NAME_KNOWN = 1.0        # name variant that is itself a real name (Philip -> Phillip)
 PRIOR_NAME_UNKNOWN = 0.6      # name variant not seen anywhere (Philip -> Fillipp)
+PRIOR_NAME_AS_WORD = 0.5      # name heard as ordinary word(s) (Philip -> filling, Hak -> hack)
 PRIOR_WORD_KNOWN = 0.7        # word heard as another real word (Pferd -> fährt)
 PRIOR_WORD_UNKNOWN_MAX = 0.10 # non-word misspelling of the rarest word in the list
 PRIOR_WORD_UNKNOWN_MIN = 0.02 # ... of the most frequent word (Pferd -> Fert)
 WORD_KNOWN_ZIPF = 3.0         # wordfreq Zipf >= this counts as a real word
+
+# --- On-demand API (src/lexicon.py, ADR-0013) -------------------------------
+
+# TTS-STT pipeline (Hak, 2026) text classes -> our kind. Unmapped classes (NUMBER, ...)
+# are not scored; None lets the lexicon decide from the DB.
+TEXTCLASS_TO_KIND: dict[str, str | None] = {
+    "NAME": "name",
+    "NATURAL_TEXT": "word",
+    "CLEAN_TEXTCLASS": None,
+}

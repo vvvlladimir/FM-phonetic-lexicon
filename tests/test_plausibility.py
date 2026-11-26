@@ -34,10 +34,22 @@ def test_reference_cases_ranked_correctly():
 
 
 def test_known_spellings_are_category_aware():
-    k = KnownSpellings(names={"fert", "phillip"}, words={"de": {"pferd", "fährt"}})
-    assert k.is_known("Phillip", "name", "en")
-    assert not k.is_known("Fert", "word", "de")      # a surname, but not a German word
-    assert k.is_known("fährt", "word", "de")
+    k = KnownSpellings(curated_names={"phillip"}, dataset_names={"fert", "filling", "fillip"},
+                       words={"de": {"pferd", "fährt"}, "en": {"filling", "pill", "up"}})
+    assert k.known_as("Phillip", "name", "en") == "name"
+    assert k.known_as("Fillip", "name", "en") == "name"     # names-dataset, not an English word
+    assert k.known_as("Fert", "word", "de") is None         # a surname, but not a German word
+    assert k.known_as("fährt", "word", "de") == "word"
+    # names-dataset junk: ordinary words typed as names count as words, not names
+    assert k.known_as("Filling", "name", "en") == "word"
+    assert k.known_as("pill up", "name", "en") == "word"
+    assert k.known_as("Xqzt", "name", "en") is None
+
+
+def test_name_heard_as_words_is_less_plausible_than_real_name():
+    real_name = plausibility("name", "name", 0, logp=-1, n_changes=1, similarity=0.95)
+    as_words = plausibility("name", "word", 0, logp=-1, n_changes=1, similarity=0.95)
+    assert real_name > as_words
 
 
 def _table():

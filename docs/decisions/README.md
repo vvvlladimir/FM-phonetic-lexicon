@@ -23,3 +23,4 @@ Statuses:
 | [0010](0010-drop-diacritics-as-own-variant-kind.md) | Dropped diacritics as a variant kind (key for Turkish) | accepted |
 | [0011](0011-defer-listener-confusion-matrices.md) | Weight sound changes by listener confusion data | proposed (deferred) |
 | [0012](0012-score-plausibility-by-category-and-frequency.md) | Plausibility = prior(category, known spelling, frequency) × typicality × similarity | accepted |
+| [0013](0013-on-demand-scoring-api-with-ipa-cache.md) | On-demand scoring API `src/lexicon.py` with IPA cache; names-dataset words count as words | accepted |
