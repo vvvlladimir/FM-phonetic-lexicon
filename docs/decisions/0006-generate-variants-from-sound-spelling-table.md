@@ -26,12 +26,12 @@ We chose the **count table plus beam search**. This is the approach of Bhagat & 
   * `silent`: drop, swap or append silent letters (Philippe→Philipe, French -s/-t/-e). Only letters that are silent in at least half of their occurrences at that position are used. Without this filter, alignment noise made German final "n" a "silent letter" (*pferd→pferdn*).
   * `near`: letters of a similar sound (ADR-0007), at most one per variant;
   * `deaccent`: drop diacritics (ADR-0010).
-* **Score**: the sum of log P(new letters | sound, position) over the changed groups, −2 per `near` change, and +2 if the spelling is attested (ADR-0009). There are at most 3 changes per variant, the beam is 300, and 40 candidates are generated per original.
+* **Score** (`logp`): the sum of log P(new letters | sound, position) over the changed groups, −2 per `near` change. Ranking uses `plausibility` (ADR-0012), which superseded the attestation bonus of ADR-0009. There are at most 3 changes per variant, the beam is 300, and 40 candidates are generated per original.
 * **Verification**: every candidate is re-phonemized with eSpeak.
   * Identical IPA → `match = homophone`. Russian is the exception, see ADR-0008.
   * PanPhon similarity ≥ 0.80 → `match = near`.
   * Everything else is discarded.
-* **Storage**: up to 20 homophones and 20 near variants per original, both ranked by score.
+* **Storage**: up to 20 homophones and 20 near variants per original, both ranked by plausibility (ADR-0012).
   * Similarity is only the entry threshold. Ranking near variants by similarity would push out the most interesting ones, the dropped sounds: *Pferd→Fert* has similarity 0.80, while *pferd→pfert* has 0.98.
 
 ### Consequences

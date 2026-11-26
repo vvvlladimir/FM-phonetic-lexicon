@@ -27,10 +27,11 @@ from .espeak_trace import trace_words
 from .fetch_names import all_spellings
 from .g2p import Table, build_alignments
 from .ipa import make_espeak_phonemizer
-from .phonetic import (_similarity_pair, ru_equivalent, sound_neighbours, sound_to_ipa,
-                       stressed_vowel_index)
+from .phonetic import (_similarity_pair, ru_equivalent, similarity, sound_neighbours,
+                       sound_to_ipa, stressed_vowel_index)
+from .plausibility import kind_of, load_known, plausibility
 from .report import _table
-from .variants import generate
+from .variants import explain_variant, generate
 
 log = logging.getLogger("build_variants")
 SINGLE_TOKEN = re.compile(r"^[^\W\d_]+$")
@@ -89,7 +90,7 @@ def known_pairs(texts) -> dict[str, set[str]]:
     return pairs
 
 
-def run_lang(conn, lang, args, names_set, pool) -> dict:
+def run_lang(conn, lang, args, known, pool) -> dict:
     t0 = time.time()
     voice = config.ESPEAK_VOICES[lang]
     texts = load_texts(conn, lang)
@@ -134,11 +135,12 @@ def run_lang(conn, lang, args, names_set, pool) -> dict:
     sims = dict(zip(todo, tqdm(pool.map(_similarity_pair, todo, chunksize=500),
                                total=len(todo), desc=f"similarity {lang}", unit="pair")))
 
-    entry_set = {w.casefold() for w in texts}
     rows, metrics, stored = [], Counter(), defaultdict(list)
     pairs = known_pairs(texts)
     for w, cs in cands.items():
         orig_ipa = texts[w]["ipa"]
+        kind = kind_of(texts[w]["cats"])
+        freq_norm = texts[w]["cats"].get("word", 0.0)
         scored = {"homophone": [], "near": []}
         for c in cs:
             v_ipa = ipa_of[c.text]
@@ -149,25 +151,24 @@ def run_lang(conn, lang, args, names_set, pool) -> dict:
                 if sim < config.NEAR_THRESHOLD:
                     continue
                 match = "near"
-            att_name = c.text.casefold() in names_set
-            att_entry = c.text.casefold() in entry_set
-            score = c.score + config.ATTESTED_BONUS * (att_name or att_entry)
-            scored[match].append((score, c, sim, att_name, att_entry, v_ipa))
+            is_known = known.is_known(c.text, kind, lang)
+            pl = plausibility(kind, is_known, freq_norm, c.score, c.n_changes, sim)
+            scored[match].append((pl, c, sim, is_known, v_ipa))
         metrics["originals"] += 1
         metrics["candidates"] += len(cs)
         metrics["cand_homophone"] += sum((w, c.text) in homo for c in cs)
         for match, lst in scored.items():
-            # most typical change first (similarity is only the entry threshold); sorting
-            # "near" by similarity would push out sound drops like Pferd -> Fert (0.8)
-            lst.sort(key=lambda x: -x[0])
+            lst.sort(key=lambda x: -x[0])  # most plausible first (ADR-0012)
             keep = lst[:args.keep]
             metrics[f"has_{match}"] += bool(keep)
-            for score, c, sim, an, ae, v_ipa in keep:
-                rows.append((w, lang, c.text, ",".join(c.kinds), match, round(sim, 4),
-                             round(score, 4), int(an), int(ae), v_ipa))
-                stored[w].append((match, c.text, ",".join(c.kinds), round(sim, 3), an or ae))
+            for pl, c, sim, is_known, v_ipa in keep:
+                rows.append((w, lang, kind, c.text, ",".join(c.kinds), match, round(sim, 4),
+                             round(c.score, 4), c.n_changes, int(is_known), round(pl, 4), v_ipa))
+                stored[w].append((match, c.text, ",".join(c.kinds), round(sim, 3), is_known, pl))
                 metrics[f"stored_{match}"] += 1
-                metrics[f"attested_{match}"] += an or ae
+                metrics[f"attested_{match}"] += is_known
+                metrics[f"pl_{kind}_sum"] += pl
+                metrics[f"pl_{kind}_n"] += 1
                 for k in c.kinds:
                     metrics[f"kind_{match}_{k}"] += 1
         if w in pairs:
@@ -177,11 +178,45 @@ def run_lang(conn, lang, args, names_set, pool) -> dict:
 
     with conn:
         conn.execute("DELETE FROM variants WHERE lang = ?", (lang,))
-        conn.executemany("INSERT INTO variants (text, lang, variant, kinds, match, similarity, score, "
-                         "attested_name, attested_entry, ipa) VALUES (?,?,?,?,?,?,?,?,?,?)", rows)
+        conn.executemany("INSERT INTO variants (text, lang, kind, variant, kinds, match, similarity, "
+                         "logp, n_changes, known_spelling, plausibility, ipa) "
+                         "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", rows)
     log.info("[%s] stored %d variants in %.0f s", lang, len(rows), time.time() - t0)
+    examples = evaluate_examples(lang, texts, aligned, table, neighbours, known, phonemize)
     return {"align": align_stats, "n_texts": len(texts), "metrics": metrics, "stored": stored,
-            "table": table, "sound_ipa": sound_ipa, "aligned": aligned, "texts": texts}
+            "table": table, "sound_ipa": sound_ipa, "aligned": aligned, "texts": texts,
+            "examples": examples}
+
+
+# Supervisor's reference cases (realistic vs. unrealistic) plus a few controls.
+REFERENCE_EXAMPLES = {
+    "en": [("Philip", "Fillipp", "realistic"), ("Philip", "Phillip", "realistic"),
+           ("Stephen", "Steven", "realistic"), ("house", "hause", "unrealistic")],
+    "de": [("Pferd", "Fert", "unrealistic"), ("Pferd", "Ferd", "unrealistic"),
+           ("Pferd", "fährt", "real word"), ("Meyer", "Meier", "realistic"),
+           ("Philipp", "Filip", "realistic")],
+}
+
+
+def evaluate_examples(lang, texts, aligned, table, neighbours, known, phonemize) -> list[tuple]:
+    """Score fixed (original, variant) pairs with the same formula as generated variants."""
+    out = []
+    fold = {t.casefold(): t for t in texts}
+    for orig, var, expected in REFERENCE_EXAMPLES.get(lang, []):
+        w = orig if orig in texts else fold.get(orig.casefold())
+        if not w or w not in aligned:
+            out.append((orig, var, expected, None, None, None, None))
+            continue
+        if not w[:1].isupper():
+            var = var.lower()
+        v_ipa = phonemize([var])[0]
+        sim = similarity(texts[w]["ipa"], v_ipa)
+        kind = kind_of(texts[w]["cats"])
+        lp, ch = explain_variant(var, aligned[w][1], table, neighbours)
+        is_known = known.is_known(var, kind, lang)
+        pl = plausibility(kind, is_known, texts[w]["cats"].get("word", 0.0), lp, ch, sim)
+        out.append((w, var, expected, kind, is_known, round(sim, 2), round(pl, 3)))
+    return out
 
 
 def pct(a, b):
@@ -212,7 +247,13 @@ def format_report(results: dict) -> str:
                         pct(m["cand_homophone"], m["candidates"]),
                         pct(m["attested_homophone"] + m["attested_near"],
                             m["stored_homophone"] + m["stored_near"]),
-                        pct(m["pair_found"], m["pair_total"])))
+                        pct(m["pair_found"], m["pair_total"]),
+                        f"{m['pl_name_sum'] / m['pl_name_n']:.2f}" if m["pl_name_n"] else "-",
+                        f"{m['pl_word_sum'] / m['pl_word_n']:.2f}" if m["pl_word_n"] else "-"))
+        if r["examples"]:
+            p(f"\n################ {lang}: reference examples ################")
+            p(_table(r["examples"], ["original", "variant", "expected", "kind", "known spelling",
+                                     "similarity", "plausibility"]))
         p(f"\n################ {lang} ################")
         kinds = sorted({k[len('kind_'):] for k in m if k.startswith("kind_")})
         p("stored variants by kind: " + ", ".join(f"{k}={m['kind_' + k]}" for k in kinds))
@@ -228,15 +269,16 @@ def format_report(results: dict) -> str:
             p(f"\n{w2}  /{r['texts'][w2]['ipa']}/   {al}")
             vs = r["stored"].get(w2, [])
             star = lambda att: "*" if att else ""
-            hom = [f"{v}{star(att)}" for mt, v, _, _, att in vs if mt == "homophone"][:10]
-            near = [f"{v}{star(att)} ({k}, {s:.2f})" for mt, v, k, s, att in vs if mt == "near"][:5]
+            hom = [f"{v}{star(att)} {pl:.2f}" for mt, v, _, _, att, pl in vs if mt == "homophone"][:8]
+            near = [f"{v}{star(att)} {pl:.2f} ({k}, sim {s:.2f})" for mt, v, k, s, att, pl in vs if mt == "near"][:5]
             p(f"   same sound : {', '.join(hom) or '-'}")
             p(f"   similar    : {', '.join(near) or '-'}")
     head = ["lang", "texts", "aligned by rules", "by viterbi", "originals", "≥1 same-sound variant",
             "≥1 similar variant", "candidates that sound same", "stored that are real spellings",
-            "known pairs found"]
+            "known pairs found", "mean plausibility names", "mean plausibility words"]
     return ("=== Step 2: spelling variants ===\n"
-            "(* = spelling exists in names-dataset or entries; similar = PanPhon similarity "
+            "(* = spelling exists (names: names-dataset/places, words: word list/wordfreq); "
+            "number = plausibility 0..1; similar = PanPhon similarity "
             f">= {config.NEAR_THRESHOLD})\n\n" + _table(summary, head) + "\n" + "\n".join(body))
 
 
@@ -259,11 +301,11 @@ def main(argv=None) -> int:
         log.error("no entries with IPA in %s - run `python -m src.build_db` first", args.db_path)
         return 2
     log.info("loading names-dataset spellings (for the 'real spelling' check)")
-    names_set = all_spellings()
+    known = load_known(conn, all_spellings())
     results = {}
     with ProcessPoolExecutor(max_workers=os.cpu_count()) as pool:
         for lang in args.langs:
-            results[lang] = run_lang(conn, lang, args, names_set, pool)
+            results[lang] = run_lang(conn, lang, args, known, pool)
     text = format_report(results)
     print(text)
     with open(args.report_path, "w", encoding="utf-8") as f:

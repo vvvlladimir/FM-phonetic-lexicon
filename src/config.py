@@ -125,5 +125,12 @@ VARIANT_CANDIDATES = 40       # candidates generated per original (before checki
 VARIANT_KEEP = 20             # variants stored per original
 VARIANT_MAX_CHANGES = 3       # letter groups changed per variant
 NEAR_THRESHOLD = 0.80         # PanPhon similarity for a "near" (sounds similar) variant
-ATTESTED_BONUS = 2.0          # score bonus if the spelling exists in names-dataset / entries
 NEIGHBOUR_MAX_DIST = 0.3      # PanPhon distance for similar sounds (p~b 0.04, m~n 0.13)
+
+# Plausibility (src/plausibility.py, ADR-0012): prior x typicality x similarity
+PRIOR_NAME_KNOWN = 1.0        # name variant that is itself a real name (Philip -> Phillip)
+PRIOR_NAME_UNKNOWN = 0.6      # name variant not seen anywhere (Philip -> Fillipp)
+PRIOR_WORD_KNOWN = 0.7        # word heard as another real word (Pferd -> fährt)
+PRIOR_WORD_UNKNOWN_MAX = 0.10 # non-word misspelling of the rarest word in the list
+PRIOR_WORD_UNKNOWN_MIN = 0.02 # ... of the most frequent word (Pferd -> Fert)
+WORD_KNOWN_ZIPF = 3.0         # wordfreq Zipf >= this counts as a real word

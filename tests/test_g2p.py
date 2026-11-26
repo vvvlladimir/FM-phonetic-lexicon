@@ -160,12 +160,23 @@ def test_ru_unstressed_vowels():
 
 def test_variants_table_unique():
     conn = db.connect(":memory:")
-    row = ("Philip", "en", "Filip", "respell", "homophone", 1.0, -0.5, 1, 0, "fɪlɪp")
-    sql = ("INSERT INTO variants (text, lang, variant, kinds, match, similarity, score, "
-           "attested_name, attested_entry, ipa) VALUES (?,?,?,?,?,?,?,?,?,?)")
+    row = ("Philip", "en", "name", "Filip", "respell", "homophone", 1.0, -0.5, 1, 1, 0.6, "fɪlɪp")
+    sql = ("INSERT INTO variants (text, lang, kind, variant, kinds, match, similarity, logp, "
+           "n_changes, known_spelling, plausibility, ipa) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)")
     conn.execute(sql, row)
     with pytest.raises(Exception):
         conn.execute(sql, row)
+
+
+def test_old_variants_table_is_migrated(tmp_path):
+    import sqlite3
+    path = tmp_path / "x.db"
+    old = sqlite3.connect(path)
+    old.execute("CREATE TABLE variants (id INTEGER PRIMARY KEY, text TEXT, attested_name INTEGER)")
+    old.commit(); old.close()
+    conn = db.connect(path)
+    cols = {r[1] for r in conn.execute("PRAGMA table_info(variants)")}
+    assert "plausibility" in cols and "attested_name" not in cols
 
 
 def test_generate_output_unique_for_turkish_dotted_i():

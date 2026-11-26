@@ -1,10 +1,12 @@
 ---
-status: accepted
+status: superseded by ADR-0012
 date: 2026-11-23
 decision-makers: project author
 ---
 
 # Use real spellings (names-dataset, entries) as a ranking bonus, not as a filter
+
+> **Superseded by [ADR-0012](0012-score-plausibility-by-category-and-frequency.md).** The bonus was not category-aware. "Fert" exists as a surname, so *Pferd → Fert* ranked high, although the supervisor's reference case calls it unrealistic.
 
 ## Context and Problem Statement
 

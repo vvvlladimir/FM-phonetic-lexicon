@@ -19,6 +19,7 @@ Statuses:
 | [0006](0006-generate-variants-from-sound-spelling-table.md) | Variants by beam search over the sound→spelling table, verified by eSpeak | accepted |
 | [0007](0007-measure-sound-similarity-with-panphon.md) | "Sounds similar" = PanPhon feature distance; two neighbour buckets | accepted |
 | [0008](0008-handle-russian-stress-by-vowel-rule.md) | Russian: unstressed-vowel rule instead of eSpeak's stress guess | accepted |
-| [0009](0009-rank-attested-spellings-higher.md) | Real spellings (names-dataset) as ranking bonus, not filter | accepted |
+| [0009](0009-rank-attested-spellings-higher.md) | Real spellings (names-dataset) as ranking bonus, not filter | superseded by 0012 |
 | [0010](0010-drop-diacritics-as-own-variant-kind.md) | Dropped diacritics as a variant kind (key for Turkish) | accepted |
 | [0011](0011-defer-listener-confusion-matrices.md) | Weight sound changes by listener confusion data | proposed (deferred) |
+| [0012](0012-score-plausibility-by-category-and-frequency.md) | Plausibility = prior(category, known spelling, frequency) × typicality × similarity | accepted |

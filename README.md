@@ -4,7 +4,7 @@ This builds a multilingual SQLite knowledge base of person names, cities, countr
 
 Languages: en, de, fr, es, it, pt, nl, ru, pl, tr. The sources and their licenses are listed in [SOURCES.md](SOURCES.md).
 
-Step 2 aligns letters to sounds and generates realistic spelling variants (*Philip → Filip, Phillip*; *Pferd → Fert*). All method decisions, with the alternatives considered and the supporting evidence, are in [docs/decisions/](docs/decisions/README.md).
+Step 2 aligns letters to sounds and generates realistic spelling variants (*Philip → Filip, Phillip*). It also scores how plausible a mistake is: *Philip → Fillipp* is realistic, *Pferd → Fert* is not.. All method decisions, with the alternatives considered and the supporting evidence, are in [docs/decisions/](docs/decisions/README.md).
 
 ## Setup
 
@@ -105,7 +105,10 @@ The script runs these stages for each language:
    - same IPA → `homophone`. Russian uses an unstressed-vowel rule instead (ADR-0008).
    - PanPhon similarity ≥ 0.80 → `near` (ADR-0007).
    - Everything else is discarded.
-5. **Rank** the variants. Spellings that exist in names-dataset or in the entries get a bonus (ADR-0009). Up to 20 variants per match type are stored.
+5. **Rank** the variants by `plausibility = prior × typicality × similarity` (ADR-0012), then store up to 20 variants per match type.
+   - A name can vary: a real name spelling gets prior 1.0, an unknown spelling 0.6.
+   - A known word can not: a misspelling of it is plausible only if the result is another real word (0.7). Otherwise the prior is 0.02–0.10, lower for more frequent words.
+   - The report prints the supervisor's reference cases (Philip→Fillipp, Pferd→Fert) per language.
 
 New tables:
 
@@ -113,14 +116,14 @@ New tables:
 |---|---|
 | `g2p_alignment` | `text, lang, method (rules/viterbi), pairs` (JSON `[[letters, sound], …]`) |
 | `sound_spelling` | `lang, sound, sound_ipa, position (B/M/E), letters, count, prob` |
-| `variants` | `text, lang, variant, kinds, match (homophone/near), similarity, score, attested_name, attested_entry, ipa` |
+| `variants` | `text, lang, kind (name/word), variant, kinds, match (homophone/near), similarity, logp, n_changes, known_spelling, plausibility, ipa` |
 
 These tables hold derived data and are rebuilt for every language you pass. The report goes to `data/report_variants.txt`. A copy of the full run is in `docs/results/variants_report.txt`. The prototype results that led to these decisions are in `docs/results/prototype_report.txt`.
 
 ```sql
 -- realistic same-sound variants of a name, best first
-SELECT variant, kinds, score, attested_name FROM variants
-WHERE lang = 'en' AND text = 'Philip' AND match = 'homophone' ORDER BY score DESC;
+SELECT variant, match, plausibility, known_spelling FROM variants
+WHERE lang = 'en' AND text = 'Philip' ORDER BY plausibility DESC;
 ```
 
 ## Example query (homophones)

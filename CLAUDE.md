@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-This is a research project at Universität Augsburg, Data Engineering chair. It builds a multilingual knowledge base for generating realistic *phonetic* spelling mistakes (e.g. Philip → Fillip, Pferd → Fert). It covers 10 languages: en, de, fr, es, it, pt, nl, ru, pl, tr.
+This is a research project at Universität Augsburg, Data Engineering chair. It builds a multilingual knowledge base for generating realistic *phonetic* spelling mistakes (and for scoring how plausible a mistake is. The supervisor's reference cases: Philip → Fillipp is realistic, Pferd → Fert is not). It covers 10 languages: en, de, fr, es, it, pt, nl, ru, pl, tr.
 
 The project has two pipeline steps. Both write into one SQLite file, `data/lexicon.db`:
 
@@ -61,7 +61,12 @@ Use `-W ignore` because panphon emits SyntaxWarnings on import. There is no lint
   - PanPhon similarity ≥ `config.NEAR_THRESHOLD` (0.80) → `near`;
   - anything else is dropped.
 
-  Ranking is by score, plus a bonus if the spelling exists in names-dataset or in `entries`. Only single-token entries are processed.
+  Ranking is by `plausibility.plausibility()` (ADR-0012): prior × typicality × similarity.
+  - The prior depends on the original's kind: name vs word (`kind_of`).
+  - It also depends on whether the variant is a known spelling of that same kind (`KnownSpellings`; a surname does not count as a German word), and on the word's frequency.
+  - Typicality comes from `variants.explain_variant`, a DP that explains any string, including STT output, against the original's alignment. It applies only to unknown spellings.
+
+  Only single-token entries are processed. `tests/test_plausibility.py` encodes the reference cases; keep them passing when tuning the `PRIOR_*` constants in `config.py`.
 - **Languages are fully separate.** Tables, generation and comparison are per language. Nothing compares across languages or scripts (e.g. Philipp vs Филипп).
 
 ## Data and constraints

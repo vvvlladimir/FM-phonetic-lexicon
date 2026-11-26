@@ -59,13 +59,15 @@ CREATE TABLE IF NOT EXISTS variants (
   id INTEGER PRIMARY KEY,
   text TEXT NOT NULL,              -- original (as in entries.text)
   lang TEXT NOT NULL,
+  kind TEXT NOT NULL,              -- name (person/place) | word
   variant TEXT NOT NULL,
-  kinds TEXT NOT NULL,             -- comma list: respell, silent, near, deaccent
+  kinds TEXT NOT NULL,             -- comma list of changes: respell, silent, near, deaccent
   match TEXT NOT NULL,             -- homophone | near
   similarity REAL NOT NULL,        -- 1 - PanPhon feature distance (1 = same sound)
-  score REAL NOT NULL,             -- log-probability of the spelling changes (+ bonus)
-  attested_name INTEGER NOT NULL,  -- variant spelling exists in names-dataset
-  attested_entry INTEGER NOT NULL, -- variant exists in entries (same lang)
+  logp REAL NOT NULL,              -- sum of log P(letters | sound) over changed groups
+  n_changes INTEGER NOT NULL,      -- changed letter groups
+  known_spelling INTEGER NOT NULL, -- variant is a real name (kind=name) / real word (kind=word)
+  plausibility REAL NOT NULL,      -- 0..1, see src/plausibility.py and ADR-0012
   ipa TEXT NOT NULL,
   UNIQUE (text, lang, variant)
 );
@@ -88,8 +90,16 @@ def connect(path: Path | str) -> sqlite3.Connection:
     conn = sqlite3.connect(str(path))
     conn.execute("PRAGMA journal_mode=WAL")
     conn.execute("PRAGMA synchronous=NORMAL")
+    _migrate(conn)
     conn.executescript(SCHEMA)
     return conn
+
+
+def _migrate(conn: sqlite3.Connection) -> None:
+    """`variants` is derived data: drop it if it has an old column layout."""
+    cols = {r[1] for r in conn.execute("PRAGMA table_info(variants)")}
+    if cols and "plausibility" not in cols:
+        conn.execute("DROP TABLE variants")
 
 
 def upsert_entries(conn: sqlite3.Connection, records: list[dict]) -> int:

@@ -1,21 +1,29 @@
 === Step 2: spelling variants ===
-(* = spelling exists in names-dataset or entries; similar = PanPhon similarity >= 0.8)
+(* = spelling exists (names: names-dataset/places, words: word list/wordfreq); number = plausibility 0..1; similar = PanPhon similarity >= 0.8)
 
-lang  texts  aligned by rules  by viterbi  originals  ≥1 same-sound variant  ≥1 similar variant  candidates that sound same  stored that are real spellings  known pairs found
-----  -----  ----------------  ----------  ---------  ---------------------  ------------------  --------------------------  ------------------------------  -----------------
-en    43958  82%               18%         7824       89%                    99%                 12%                         25%                             69%              
-de    42478  91%               9%          8006       88%                    99%                 12%                         22%                             76%              
-fr    34925  92%               8%          7700       96%                    100%                17%                         25%                             59%              
-es    36727  97%               3%          7831       99%                    99%                 13%                         22%                             81%              
-it    32650  96%               3%          7809       87%                    100%                8%                          20%                             82%              
-pt    38334  84%               16%         7529       94%                    100%                10%                         19%                             70%              
-nl    33720  93%               7%          8110       85%                    99%                 10%                         22%                             84%              
-ru    43744  91%               9%          8038       89%                    100%                8%                          6%                              80%              
-pl    34076  99%               1%          8009       81%                    100%                7%                          14%                             76%              
-tr    31619  97%               3%          7644       6%                     100%                1%                          20%                             47%              
+lang  texts  aligned by rules  by viterbi  originals  ≥1 same-sound variant  ≥1 similar variant  candidates that sound same  stored that are real spellings  known pairs found  mean plausibility names  mean plausibility words
+----  -----  ----------------  ----------  ---------  ---------------------  ------------------  --------------------------  ------------------------------  -----------------  -----------------------  -----------------------
+en    43958  82%               18%         7824       89%                    99%                 12%                         21%                             69%                0.33                     0.05                   
+de    42478  91%               9%          8006       88%                    99%                 12%                         19%                             76%                0.30                     0.06                   
+fr    34925  92%               8%          7700       96%                    100%                17%                         21%                             59%                0.33                     0.08                   
+es    36727  97%               3%          7831       99%                    99%                 13%                         18%                             81%                0.31                     0.05                   
+it    32650  96%               3%          7809       87%                    100%                8%                          16%                             82%                0.29                     0.05                   
+pt    38334  84%               16%         7529       94%                    100%                10%                         15%                             70%                0.29                     0.04                   
+nl    33720  93%               7%          8110       85%                    99%                 10%                         19%                             84%                0.31                     0.06                   
+ru    43744  91%               9%          8038       89%                    100%                8%                          6%                              80%                0.18                     0.05                   
+pl    34076  99%               1%          8009       81%                    100%                7%                          13%                             76%                0.24                     0.05                   
+tr    31619  97%               3%          7644       6%                     100%                1%                          18%                             47%                0.26                     0.08                   
+
+################ en: reference examples ################
+original  variant  expected     kind  known spelling  similarity  plausibility
+--------  -------  -----------  ----  --------------  ----------  ------------
+Philip    Fillipp  realistic    name  False           1.000       0.085       
+Philip    Phillip  realistic    name  True            1.000       1.000       
+Stephen   Steven   realistic    name  True            1.000       1.000       
+house     hause    unrealistic  word  False           0.740       0.000       
 
 ################ en ################
-stored variants by kind: homophone_deaccent=26, homophone_near=1005, homophone_respell=29807, homophone_silent=9988, near_deaccent=39, near_near=104507, near_respell=66427, near_silent=38260
+stored variants by kind: homophone_deaccent=26, homophone_near=1005, homophone_respell=29809, homophone_silent=9987, near_deaccent=33, near_near=103543, near_respell=86286, near_silent=52179
 
 sounds with the most spellings:
 sound      spellings (share)                          
@@ -26,27 +34,36 @@ sound      spellings (share)
 /ɪ/ (I)    i 87%, y 7%, e 5%, ui 0%, ie 0%, ey 0%     
 
 Philip  /fɪlɪp/   ph→f i→ɪ l→l i→ɪ p→p
-   same sound : Filip*, Phillip*, Fillip*, Philyp, Filyp
-   similar    : Philipe* (silent, 0.85), Filipe* (respell,silent, 0.80), Pilip* (near, 0.98), Philep* (near, 0.83), Filep* (respell,near, 0.83)
+   same sound : Filip* 1.00, Phillip* 1.00, Fillip* 1.00, Filyp 0.15, Philyp 0.04
+   similar    : Felip* 0.99 (respell,near, sim 0.99), Pilip* 0.98 (near, sim 0.98), Philiph* 0.98 (silent, sim 0.98), Filiph* 0.98 (respell,silent, sim 0.98), Philipe* 0.85 (silent, sim 0.85)
 
 Catherine  /kæθɹɪn/   c→k a→ th→θ e→∅ r→ɹ in→I2n e→∅
-   same sound : Katherine*, Cathrin*, Kathrin*, Cathrinh
-   similar    : Catherin* (silent, 1.00), Cathrine* (silent, 0.99), Cathetine* (near, 0.83), Katherin* (respell,silent, 1.00), Kathrine* (respell,silent, 0.99)
+   same sound : Katherine* 1.00, Cathrin* 1.00, Kathrin* 1.00, Cathrinh 0.08
+   similar    : Catherin* 1.00 (silent, sim 1.00), Katherin* 1.00 (respell,silent, sim 1.00), Catherinne* 1.00 (silent, sim 1.00), Kathrene* 0.99 (respell,silent, sim 0.99), Cathrine* 0.99 (silent, sim 0.99)
 
 Stephen  /stiːvən/   s→s t→ɾ e→iː p→v h→∅ en→ən
-   same sound : Steven*, Steeven*
-   similar    : Stephon* (respell, 0.95), Steephen* (respell, 0.99), Stephan* (respell, 0.97), Stepen* (silent, 0.96), Stephene* (silent, 0.94)
+   same sound : Steven* 1.00, Steeven* 1.00
+   similar    : Steephen* 0.99 (respell, sim 0.99), Steephan* 0.99 (respell, sim 0.99), Stephan* 0.97 (respell, sim 0.97), Stepen* 0.96 (silent, sim 0.96), Stevon* 0.95 (respell,silent, sim 0.95)
 
 Jackson  /dʒæksən/   j→dʒ a→ ck→k s→s on→ən
-   same sound : Jakson*, Jacson*, Jacksan*, Jacksen*, Jaksan*, Jacsan, Jacksn, Jaksen, Jacsen
-   similar    : Jacksone* (silent, 0.88), Dackson* (near, 0.87), Janson* (near, 0.95), Jaksa* (respell,near, 0.87), Gackson (respell, 0.84)
+   same sound : Jakson* 1.00, Jacson* 1.00, Jacksan* 1.00, Jacksen* 1.00, Jaksan* 1.00, Jacsan 0.23, Jaksen 0.17, Jacsen 0.17
+   similar    : Janson* 0.96 (near, sim 0.95), Jacksone* 0.88 (silent, sim 0.88), Dackson* 0.87 (near, sim 0.87), Jaksa* 0.87 (respell,near, sim 0.87), Jaksone 0.17 (respell,silent, sim 0.88)
 
 Thompson  /tɑːmpsən/   th→ɾ o→ɑː m→m p→p s→s on→ən
-   same sound : Tompson*, Thompsan, Tompsan, Thompsen, Tompsen, Tompsn, Thommpson, Tommpson
-   similar    : Thonpson* (near, 0.97), Thompzon* (near, 0.97), Thompsone (silent, 0.88), Tompsone (respell,silent, 0.88), Thompcon (respell, 0.96)
+   same sound : Tompson* 1.00, Tompsan 0.35, Tompsen 0.26, Tompsn 0.21, Thompsan 0.20, Tommpson 0.14, Thompsen 0.12, Thommpson 0.03
+   similar    : Thonpson* 0.97 (near, sim 0.97), Thompzon* 0.97 (near, sim 0.97), Tompsone 0.26 (respell,silent, sim 0.88), Tompcon 0.23 (respell, sim 0.96), Tompsane 0.23 (respell,silent, sim 0.88)
+
+################ de: reference examples ################
+original  variant  expected     kind  known spelling  similarity  plausibility
+--------  -------  -----------  ----  --------------  ----------  ------------
+pferd     fert     unrealistic  word  False           0.800       0.018       
+pferd     ferd     unrealistic  word  False           0.820       0.008       
+pferd     fährt    real word    word  True            0.810       0.566       
+Meyer     Meier    realistic    name  True            1.000       1.000       
+Philipp   Filip    realistic    name  True            0.980       0.983       
 
 ################ de ################
-stored variants by kind: homophone_deaccent=14, homophone_near=2048, homophone_respell=32317, homophone_silent=496, near_deaccent=525, near_near=135445, near_respell=62662, near_silent=5962
+stored variants by kind: homophone_deaccent=14, homophone_near=2047, homophone_respell=32318, homophone_silent=496, near_deaccent=506, near_near=135620, near_respell=93073, near_silent=8548
 
 sounds with the most spellings:
 sound      spellings (share)                        
@@ -57,27 +74,27 @@ sound      spellings (share)
 /s/ (s)    s 75%, ss 22%, ß 2%, c 1%, ç 0%, ness 0% 
 
 Philipp  /fiːlɪp/   ph→f i→iː l→l i→ɪ p→p p→∅
-   same sound : Filipp*, Phielipp, Fielipp
-   similar    : Philip* (silent, 0.98), Filip* (respell,silent, 0.98), Pilip* (near,silent, 0.97), Philep* (near,silent, 0.97), Philibp (near, 0.85)
+   same sound : Filipp* 1.00, Fielipp 0.29, Phielipp 0.15
+   similar    : Philip* 0.98 (silent, sim 0.98), Filip* 0.98 (respell,silent, sim 0.98), Philep* 0.97 (near,silent, sim 0.97), Pilip* 0.97 (near,silent, sim 0.97), Fielip 0.24 (respell,silent, sim 0.98)
 
 Meyer  /maɪɜ/   m→m ey→aɪ er→ɜ
-   same sound : Meier*, Mayer*, Maier*
-   similar    : Neyer* (near, 0.97), Mauer* (near, 0.98), Meye* (near, 1.00), Neier* (near,respell, 0.97), Beier* (near,respell, 0.98)
+   same sound : Meier* 1.00, Mayer* 1.00, Maier* 1.00
+   similar    : Meye* 1.00 (near, sim 1.00), Maie* 1.00 (respell,near, sim 1.00), Maye* 1.00 (respell,near, sim 1.00), Mauer* 0.98 (near, sim 0.98), Beier* 0.98 (near,respell, sim 0.98)
 
 pferd  /pfeːɾt/   pf→pf er→e:r d→t
    same sound : -
-   similar    : ferd* (near, 0.82), pert* (near,respell, 0.80), pfert (respell, 0.98), fert* (near,respell, 0.80), querd (near, 0.96)
+   similar    : perth* 0.56 (near,respell, sim 0.80), pfert 0.05 (respell, sim 0.98), quert 0.02 (near,respell, sim 0.94), pert 0.02 (near,respell, sim 0.80), fert 0.02 (near,respell, sim 0.80)
 
 Schmidt  /ʃmɪt/   sch→ʃ m→m i→ɪ dt→t
-   same sound : Schmith*
-   similar    : Schmit* (respell, 0.98), Smidt* (respell, 0.98), Smit* (respell, 0.96), Schmid* (respell, 0.98), Smid* (respell, 0.96)
+   same sound : Schmith* 1.00
+   similar    : Schmit* 0.98 (respell, sim 0.98), Smidt* 0.98 (respell, sim 0.98), Schmid* 0.98 (respell, sim 0.98), Smith* 0.98 (respell, sim 0.98), Smedt* 0.97 (respell,near, sim 0.97)
 
 Katharina  /katariːnɑː/   ka→ka th→t a→a r→r i→iː na→nA:
    same sound : -
-   similar    : Katarina* (respell, 1.00), Kathalina* (near, 0.99), Katalina* (respell,near, 0.98), Kathariena (respell, 0.89), Katariena (respell, 0.89)
+   similar    : Katarina* 1.00 (respell, sim 1.00), Kathalina* 0.99 (near, sim 0.99), Katalina* 0.98 (respell,near, sim 0.98), Katariena 0.26 (respell, sim 0.89), Katerrina 0.21 (respell,near, sim 0.99)
 
 ################ fr ################
-stored variants by kind: homophone_deaccent=43, homophone_near=777, homophone_respell=37869, homophone_silent=21818, near_deaccent=524, near_near=108861, near_respell=53195, near_silent=46967
+stored variants by kind: homophone_deaccent=43, homophone_near=778, homophone_respell=37881, homophone_silent=21828, near_deaccent=486, near_near=109475, near_respell=72355, near_silent=61263
 
 sounds with the most spellings:
 sound    spellings (share)                        
@@ -88,27 +105,27 @@ sound    spellings (share)
 /t/ (t)  t 91%, tt 6%, th 2%, ent 1%, ts 0%, dt 0%
 
 Philippe  /filip/   ph→f i→j l→l i→j p→∅ p→p e→∅
-   same sound : Filippe*, Philipp*, Philipe*, Filipp*, Filipe*, Philip*, Filip*, Filipes*, Philippes, Filippes
-   similar    : Phillippe* (respell, 0.95), Philippt (silent, 0.82), Pilippe (near, 0.98), Vilippe (near, 0.99), Philipbe (near, 0.85)
+   same sound : Filippe* 1.00, Philipp* 1.00, Philipe* 1.00, Filipp* 1.00, Filipe* 1.00, Philip* 1.00, Filip* 1.00, Filipes* 1.00
+   similar    : Phillippe* 0.95 (respell, sim 0.95), Fidippe 0.21 (respell,near, sim 0.97), Finippe 0.20 (respell,near, sim 0.97), Filipbe 0.18 (respell,near, sim 0.85), Filippt 0.18 (respell,silent, sim 0.82)
 
 Thierry  /tjɛʁi/   t→t hi→j e→ɛ rr→ʁ y→j
-   same sound : Thierri*, Thierris, Thierrie
-   similar    : Thiery* (respell, 0.89), Thierie* (respell,silent, 0.80), Thieri (respell, 0.99), Tillerri (respell, 0.85), Tilleri (respell, 0.84)
+   same sound : Thierri* 1.00, Thierrie 0.18, Thierris 0.07
+   similar    : Thiery* 0.89 (respell, sim 0.89), Thierie* 0.80 (respell,silent, sim 0.80), Thieri 0.45 (respell, sim 0.99), Tilleri 0.41 (respell, sim 0.84), Tillerri 0.38 (respell, sim 0.85)
 
 Rousseau  /ʁuso/   r→ʁ ou→u ss→s eau→o
-   same sound : Rousso*, Roussot*, Rouceau, Rousseaue, Rousseaues, Rousseaut, Roussaud, Roussau, Rouceaue
-   similar    : Rouco* (respell, 0.93), Gousseau* (near, 0.97), Rosseau* (near, 0.97), Russo* (near,respell, 0.99), Rosso* (near,respell, 0.97)
+   same sound : Rousso* 1.00, Roussot* 1.00, Rouceau 0.13, Rouceaue 0.11, Rousseaue 0.09, Rousseaues 0.03, Rousseaut 0.02, Roussaud 0.02
+   similar    : Russo* 0.99 (near,respell, sim 0.99), Rouzeau* 0.99 (near, sim 0.99), Ruso* 0.98 (near,respell, sim 0.98), Gousseau* 0.97 (near, sim 0.97), Rosseau* 0.97 (near, sim 0.97)
 
 Bordeaux  /bɔʁdo/   b→b o→ɔ r→ʁ d→d eau→o x→∅
-   same sound : Bordeau*, Bordo*, Bordeaue, Bordeaues, Bordeaut, Bordaux, Bordot, Bordaue
-   similar    : Bordoe (respell,silent, 0.99), Pordeaux (near, 0.99), Mordeaux (near, 0.98), Borneaux (near, 0.98), Bogdeaux (near, 0.97)
+   same sound : Bordeau* 1.00, Bordo* 1.00, Bordeaue 0.29, Bordot 0.20, Bordaue 0.15, Bordeaues 0.09, Bordeaut 0.08, Bordaux 0.08
+   similar    : Bordoe 0.38 (respell,silent, sim 0.99), Pordoe 0.22 (near,respell,silent, sim 0.98), Mordoe 0.22 (near,respell,silent, sim 0.97), Bornoe 0.22 (near,respell,silent, sim 0.97), Bogdoe 0.22 (near,respell,silent, sim 0.97)
 
 Mathieu  /matjø/   m→m a→a th→t i→∅ eu→jø
-   same sound : Mathieux*, Mattieu*, Mathieue, Mattieux, Mathieues, Mathieut
-   similar    : Matieu* (respell, 0.98), Matheu* (silent, 0.95), Mateu* (respell,silent, 0.82), Madieu* (near, 0.99), Mathier* (near, 0.99)
+   same sound : Mathieux* 1.00, Mattieu* 1.00, Mattieux 0.13, Mathieue 0.09, Mathieues 0.03, Mathieut 0.02
+   similar    : Madieu* 0.99 (near, sim 0.99), Mathier* 0.99 (near, sim 0.99), Matieu* 0.98 (respell, sim 0.98), Matii* 0.98 (respell,near, sim 0.98), Matheu* 0.95 (silent, sim 0.95)
 
 ################ es ################
-stored variants by kind: homophone_deaccent=6, homophone_near=1533, homophone_respell=30907, homophone_silent=13278, near_deaccent=116, near_near=136071, near_respell=35543, near_silent=38401
+stored variants by kind: homophone_deaccent=6, homophone_near=1533, homophone_respell=30908, homophone_silent=13277, near_deaccent=115, near_near=135067, near_respell=63250, near_silent=60730
 
 sounds with the most spellings:
 sound    spellings (share)               
@@ -119,27 +136,27 @@ sound    spellings (share)
 /j/ (j)  i 99%, y 0%, hi 0%              
 
 Felipe  /felipe/   f→f e→e l→l i→i p→p e→e
-   same sound : Felipeh*, Phelipe*, Felype*, Felípe, Felipé, Félipe
-   similar    : Pelipe* (near, 0.99), Filipe* (near, 0.99), Felipi* (near, 0.99), Felipy* (near, 0.99), Felipeg (silent, 0.87)
+   same sound : Felipeh* 1.00, Phelipe* 1.00, Felype* 1.00, Felípe 0.03, Felipé 0.02, Félipe 0.01
+   similar    : Filipe* 0.99 (near, sim 0.99), Felipi* 0.99 (near, sim 0.99), Felipy* 0.99 (near, sim 0.99), Filipeh* 0.99 (near,silent, sim 0.99), Pelipe* 0.99 (near, sim 0.99)
 
 Javier  /xaβjeɾ/   j→x a→a v→β i→j e→e r→ɾ
-   same sound : Jabier*, Javierh, Jabierh, Jávier
-   similar    : Gavier* (respell, 0.99), Gabier* (respell, 0.99), Javiel* (near, 0.98), Javyer* (near, 0.99), Jevier* (near, 0.99)
+   same sound : Jabier* 1.00, Jabierh 0.16, Javierh 0.08, Jávier 0.02
+   similar    : Gavier* 0.99 (respell, sim 0.99), Gabier* 0.99 (respell, sim 0.99), Javyer* 0.99 (near, sim 0.99), Jevier* 0.99 (near, sim 0.99), Javiel* 0.98 (near, sim 0.98)
 
 Vázquez  /baθkeθ/   v→β á→a z→θ qu→k e→e z→θ
-   same sound : Vazquez*, Bazquez*, Vazkez*, Bázquez, Vázquezh, Vázkez, Vazquezh
-   similar    : Vadquez* (respell,near, 0.98), Vázcez (respell, 0.96), Vazcez (respell, 0.96), Vácquez (respell, 0.96), Vacquez (respell, 0.96)
+   same sound : Vazquez* 1.00, Bazquez* 1.00, Vazkez* 1.00, Bázquez 0.35, Vazquezh 0.22, Vázquezh 0.08, Vázkez 0.08
+   similar    : Vadquez* 0.98 (respell,near, sim 0.98), Vazcez 0.49 (respell, sim 0.96), Vacquez 0.48 (respell, sim 0.96), Vaccez 0.44 (respell, sim 0.92), Bazcez 0.44 (respell, sim 0.96)
 
 Guillermo  /ɡiʎeɾmo/   g→ɣ u→∅ i→i ll→ʎ e→e r→ɾ m→m o→o
-   same sound : Ghillermo, Guillermoh, Ghillermoh, Guillermó, Guíllermo, Ghillermó
-   similar    : Gillermo* (silent, 0.99), Guillerno* (near, 0.98), Guilermo* (near, 0.98), Guellermo* (near, 0.99), Guillerma* (near, 0.99)
+   same sound : Ghillermo 0.40, Ghillermoh 0.18, Ghillermó 0.13, Guillermoh 0.08, Guillermó 0.04, Guíllermo 0.03
+   similar    : Guellermo* 0.99 (near, sim 0.99), Gillermo* 0.99 (silent, sim 0.99), Guillerma* 0.99 (near, sim 0.99), Guillerme* 0.99 (near, sim 0.99), Guillerno* 0.99 (near, sim 0.98)
 
 Sevilla  /seβiʎa/   s→s e→e v→β i→i ll→ʎ a→a
-   same sound : Sebilla*, Sevillah, Sebillah, Sevílla, Sebílla, Xevilla, Sévilla
-   similar    : Sevila* (near, 0.98), Seville* (near, 0.99), Sevillo* (near, 0.99), Cevilla* (near, 0.99), Sebila* (respell,near, 0.98)
+   same sound : Sebilla* 1.00, Sebillah 0.16, Sebílla 0.11, Sevillah 0.08, Sevílla 0.03, Xevilla 0.02, Sévilla 0.01
+   similar    : Sibilla* 0.99 (near,respell, sim 0.99), Seville* 0.99 (near, sim 0.99), Sevillo* 0.99 (near, sim 0.99), Cevilla* 0.99 (near, sim 0.99), Sebille* 0.99 (respell,near, sim 0.99)
 
 ################ it ################
-stored variants by kind: homophone_deaccent=22, homophone_near=15, homophone_respell=15838, homophone_silent=12616, near_deaccent=47, near_near=143484, near_respell=23637, near_silent=48487
+stored variants by kind: homophone_deaccent=22, homophone_near=15, homophone_respell=15842, homophone_silent=12616, near_deaccent=45, near_near=144465, near_respell=36616, near_silent=82634
 
 sounds with the most spellings:
 sound      spellings (share)                    
@@ -150,25 +167,25 @@ sound      spellings (share)
 /kː/ (k:)  cc 57%, cch 28%, ck 13%, kk 2%       
 
 Filippo  /filipːo/   f→f i→i l→l i→i pp→pː o→o
-   same sound : Filippoh, Philippo*, Filyppo, Fylippo, Philippoh, Filyppoh, Fylippoh
-   similar    : Filipo* (near, 0.99), Filippa* (near, 0.99), Filippu (near, 0.99), Filibbo (near, 0.99), Filitto (near, 0.98)
+   same sound : Philippo* 1.00, Filippoh 0.16, Philippoh 0.03, Filyppoh 0.03, Fylippoh 0.03, Filyppo 0.01, Fylippo 0.01
+   similar    : Filipo* 0.99 (near, sim 0.99), Philipo* 0.99 (respell,near, sim 0.99), Filippa* 0.99 (near, sim 0.99), Philippa* 0.99 (respell,near, sim 0.99), Filibboh 0.11 (near,silent, sim 0.99)
 
 Giovanni  /dʒovannɪ/   gi→dʒ o→o v→v a→a n→n n→n i→ɪ
-   same sound : Jovanni*, Giovanny*, Giovannih, Jovannih
-   similar    : Govanni* (respell, 0.86), Giovonni* (near, 0.98), Javanni* (respell,near, 0.99), Giovannu (near, 0.99), Giovandi (near, 0.99)
+   same sound : Jovanni* 1.00, Giovanny* 1.00, Jovannih 0.17, Giovannih 0.16
+   similar    : Javanni* 0.99 (respell,near, sim 0.99), Giovonni* 0.98 (near, sim 0.98), Govanni* 0.86 (respell, sim 0.86), Govannih 0.16 (respell,silent, sim 0.86), Jovannu 0.12 (respell,near, sim 0.99)
 
 Chiara  /kjaɾa/   ch→k i→j a→a r→ɾ a→a
-   same sound : Kiara*, Chiarah, Chyara, Chiarà
-   similar    : Ciara* (respell, 0.91), Ciarah* (respell,silent, 0.91), Niara* (near, 0.94), Chiaro* (near, 0.98), Chiora* (near, 0.97)
+   same sound : Kiara* 1.00, Chiarah 0.16, Chyara 0.05, Chiarà 0.03
+   similar    : Chiaro* 0.98 (near, sim 0.98), Chiora* 0.97 (near, sim 0.97), Chiera* 0.97 (near, sim 0.97), Niara* 0.94 (near, sim 0.94), Ciara* 0.91 (respell, sim 0.91)
 
 Napoli  /napolɪ/   n→n a→a p→p o→o l→l i→ɪ
-   same sound : Napolyh
-   similar    : Napolu* (near, 0.98), Naboli* (near, 0.99), Napali* (near, 0.99), Napolih (silent, 0.99), Napori (near, 0.98)
+   same sound : Napolyh 0.08
+   similar    : Naboli* 0.99 (near, sim 0.99), Napali* 0.99 (near, sim 0.99), Napolu* 0.98 (near, sim 0.98), Napolih 0.16 (silent, sim 0.99), Napoluh 0.11 (near,silent, sim 0.99)
 
 Ghirardelli: not in DB
 
 ################ pt ################
-stored variants by kind: homophone_deaccent=46, homophone_near=3331, homophone_respell=24244, homophone_silent=6814, near_deaccent=423, near_near=120823, near_respell=51598, near_silent=34029
+stored variants by kind: homophone_deaccent=46, homophone_near=3330, homophone_respell=24248, homophone_silent=6816, near_deaccent=303, near_near=119153, near_respell=85486, near_silent=59445
 
 sounds with the most spellings:
 sound        spellings (share)                         
@@ -179,27 +196,27 @@ sound        spellings (share)
 /aʊ/ (aU)    au 79%, ao 16%, áu 3%, ál 2%              
 
 Filipe  /filipɨ/   f→f i→i l→l i→i p→p e→ɨ
-   same sound : Philipe*, Filype*, Filípe, Fílipe, Fylipe, Filípeh, Fílipeh
-   similar    : Filipeh* (silent, 0.99), Filipa* (near, 0.99), Felipe* (near, 0.99), Filipi* (near, 0.99), Filipy* (near, 0.99)
+   same sound : Philipe* 1.00, Filype* 1.00, Filípeh 0.05, Fílipeh 0.05, Filípe 0.02, Fílipe 0.02, Fylipe 0.01
+   similar    : Filibe* 0.99 (near, sim 0.99), Felipe* 0.99 (near, sim 0.99), Filipi* 0.99 (near, sim 0.99), Filipy* 0.99 (near, sim 0.99), Filipeh* 0.99 (silent, sim 0.99)
 
 Gonçalves  /ɡuŋsɑlvɨʃ/   g→ɡ on→uŋ ç→s a→A l→l v→v e→ɨ s→ʒ
-   same sound : Gonsalves*
-   similar    : Goncalves* (respell, 0.96), Gonçalvis* (near, 0.99), Gonçalvez* (near, 0.99), Goçalves* (near, 0.90), Goncalvis* (respell,near, 0.96)
+   same sound : Gonsalves* 1.00
+   similar    : Gonçalvis* 1.00 (near, sim 0.99), Gonzalves* 1.00 (near, sim 0.99), Gonçalvez* 0.99 (near, sim 0.99), Goncalves* 0.97 (respell, sim 0.96), Goncalvis* 0.97 (respell,near, sim 0.96)
 
 João  /ʒuɐ̃ʊ̃/   j→ʒ o→u ão→ɐ̃ʊ̃
-   same sound : Joao*, Juam*, Joãoh, Júão, Júam
-   similar    : Juão* (respell, 0.98), Joam* (respell, 0.98), Goam* (respell, 0.92), Guam* (respell, 0.92), Goão (respell, 0.94)
+   same sound : Juam* 1.00, Joao* 1.00, Joãoh 0.12, Júam 0.04, Júão 0.01
+   similar    : Juão* 0.98 (respell, sim 0.98), Joam* 0.98 (respell, sim 0.98), Shoam* 0.97 (near,respell, sim 0.97), Soam* 0.95 (near,respell, sim 0.95), Goam* 0.92 (respell, sim 0.92)
 
 Conceição  /kuŋseɪsɐ̃ʊ̃/   c→k on→uŋ c→s ei→eɪ ç→s ão→ɐ̃ʊ̃
-   same sound : Conseição*, Conçeição*, Conceicao*, Conceiçam, Conceiçãoh, Konceição, Conseiçam, Conçeiçam, Conseiçãoh, Konceiçam
-   similar    : Conceicão* (respell, 0.97), Conceiçao* (deaccent, 0.98), Conçeicão* (respell, 0.97), Conceisão (respell, 0.99), Conceicam (respell, 0.97)
+   same sound : Conseição* 1.00, Conçeição* 1.00, Conceicao* 1.00, Conceiçam 0.21, Conseiçam 0.18, Conçeiçam 0.18, Conseiçãoh 0.14, Konceiçam 0.14
+   similar    : Conceiçao* 0.98 (deaccent, sim 0.98), Conceicão* 0.97 (respell, sim 0.97), Conçeicão* 0.97 (respell, sim 0.97), Conceicam 0.23 (respell, sim 0.97), Conseicão 0.20 (respell, sim 0.97)
 
 Lisboa  /liʒboɐ/   l→l i→i s→ʒ b→b o→o a→ɐ
-   same sound : Lisbôa*, Lizboa*, Lijboa
-   similar    : Lesboa* (near, 0.99), Ligboa (respell, 0.96), Lisboah (silent, 0.97), Lisboê (near, 0.99), Lisboé (near, 0.98)
+   same sound : Lisbôa* 1.00, Lizboa* 1.00, Lijboa 0.20
+   similar    : Lesboa* 0.99 (near, sim 0.99), Ligboa 0.26 (respell, sim 0.96), Ligboah 0.17 (respell,silent, sim 0.93), Lijboah 0.15 (respell,silent, sim 0.97), Ligpoa 0.14 (respell,near, sim 0.95)
 
 ################ nl ################
-stored variants by kind: homophone_deaccent=22, homophone_near=1371, homophone_respell=26935, homophone_silent=448, near_deaccent=45, near_near=136025, near_respell=66199, near_silent=6331
+stored variants by kind: homophone_deaccent=22, homophone_near=1371, homophone_respell=26935, homophone_silent=448, near_deaccent=41, near_near=136778, near_respell=97696, near_silent=9871
 
 sounds with the most spellings:
 sound      spellings (share)                              
@@ -210,27 +227,27 @@ sound      spellings (share)
 /ʌʊ/ (VU)  ou 54%, au 27%, ouw 15%, auw 2%, ao 2%, aauw 0%
 
 philip  /filɪp/   ph→f i→i l→l i→ɪ p→p
-   same sound : filip*, phylip*, phielip, fielip, philib, filib, fylip, phielib, fielib, philyp
-   similar    : pilip* (near, 0.98), philep* (near, 0.99), filep* (respell,near, 0.99), felip* (respell,near, 0.98), philiep* (near, 0.99)
+   same sound : filip* 0.70, fielip 0.05, filib 0.03, fielib 0.03, phielip 0.03, fylip 0.02, phielib 0.02, filyp 0.02
+   similar    : filep 0.03 (respell,near, sim 0.99), felip 0.03 (respell,near, sim 0.98), firip 0.03 (respell,near, sim 0.98), fidip 0.03 (respell,near, sim 0.97), fielep 0.03 (respell,near, sim 0.99)
 
 Sjoerd  /ʃurt/   sj→ʃ oe→u r→r d→t
-   same sound : Sjoert*, Choerd, Choert, Shoerd, Shoert, Sjoerdt, Sjoerth, Choerdt, Choerth, Shoerdt
-   similar    : Sjurd* (near, 0.97), Sjoers* (near, 0.98), Sjoeld (near, 0.97), Goerd (near, 0.94), Soerd (near, 0.98)
+   same sound : Sjoert* 1.00, Choert 0.35, Choerd 0.34, Shoert 0.27, Shoerd 0.20, Choerdt 0.06, Choerth 0.06, Shoerdt 0.05
+   similar    : Sjoers* 0.98 (near, sim 0.98), Sjurd* 0.97 (near, sim 0.97), Choelt 0.21 (respell,near, sim 0.97), Churt 0.21 (respell,near, sim 0.97), Shoelt 0.18 (respell,near, sim 0.97)
 
 Huijgens  /hœyjɣəns/   h→h ui→œy j→j g→ɣ ens→əns
-   same sound : Huijggens
-   similar    : Huijgen* (near, 0.88), Huijgend (near, 0.99), Huijgent (near, 0.98), Huijges (near, 0.88), Heeuwjgens (near, 0.97)
+   same sound : Huijggens 0.03
+   similar    : Huijgen* 0.88 (near, sim 0.88), Huijgend 0.08 (near, sim 0.99), Huijgent 0.08 (near, sim 0.98), Guijgens 0.08 (near, sim 0.98), Chuijgens 0.08 (near, sim 0.98)
 
 Gerrit  /ɣɛɾrɪt/   ge→ɣɛ rr→ɾr i→ɪ t→t
-   same sound : Gerrid, Gerryt, Gerridt, Gerrith, Gerryd
-   similar    : Gerit* (near, 0.85), Berrit* (near, 0.96), Errit* (near, 0.85), Gerret* (near, 0.99), Gerris* (near, 0.99)
+   same sound : Gerrid 0.21, Gerryd 0.07, Gerryt 0.02, Gerridt 0.01, Gerrith 0.01
+   similar    : Gerret* 0.99 (near, sim 0.99), Gerriet* 0.99 (near, sim 0.99), Gerris* 0.99 (near, sim 0.99), Berrit* 0.97 (near, sim 0.96), Berrid* 0.97 (near,respell, sim 0.96)
 
 Utrecht  /ɵtrɛxt/   u→ɵ t→t r→r e→ɛ ch→x t→t
-   same sound : Utrechd, Utregt, Utregd, Uthrecht, Utrechdt, Utrechth, Uthrechd, Utreggt, Uthregt
-   similar    : Utlecht (near, 0.98), Utdecht (near, 0.85), Udrecht (near, 0.99), Oetrecht (near, 0.98), Utrechs (near, 0.99)
+   same sound : Utrechd 0.21, Utregd 0.13, Utregt 0.08, Uthrechd 0.07, Uthregt 0.04, Uthrecht 0.02, Utrechdt 0.01, Utrechth 0.01
+   similar    : Udrechd 0.13 (near,respell, sim 0.99), Utlechd 0.13 (near,respell, sim 0.98), Oetrechd 0.13 (near,respell, sim 0.98), Utrichd 0.13 (near,respell, sim 0.99), Usrechd 0.12 (near,respell, sim 0.99)
 
 ################ ru ################
-stored variants by kind: homophone_near=8132, homophone_respell=17630, homophone_silent=1187, near_near=140246, near_respell=69352, near_silent=1859
+stored variants by kind: homophone_near=8132, homophone_respell=17631, homophone_silent=1187, near_near=141361, near_respell=113221, near_silent=4350
 
 sounds with the most spellings:
 sound    spellings (share)  
@@ -241,27 +258,27 @@ sound    spellings (share)
 /y/ (y)  ы 62%, и 25%, е 13%
 
 Филипп  /fʲiɭʲipp/   ф→fʲ и→i л→ɭʲ и→i п→p п→p
-   same sound : Филипб, Фелипп, Фелипб, Филибп, Филибб, Фелибп
-   similar    : Филепп (respell, 0.99), Филепб (respell, 0.99), Фирипп (near, 0.99), Вилипп (near, 0.99), Пилипп (near, 0.99)
+   same sound : Филипб 0.29, Фелипб 0.25, Фелипп 0.20, Филибб 0.15, Фелибп 0.13, Филибп 0.08
+   similar    : Филепб 0.24 (respell, sim 0.99), Фелепб 0.23 (respell, sim 0.99), Филепп 0.20 (respell, sim 0.99), Фелепп 0.20 (respell, sim 0.99), Вилепб 0.17 (near,respell, sim 0.99)
 
 Наталья  /natɑɭjja/   н→n а→ɑ т→t а→ɑ л→ɭ ь→j я→ja
-   same sound : Наталье, Ноталья, Наталъя
-   similar    : Неталья* (near, 0.98), Наталйя (respell, 0.88), Натарья (near, 0.89), Нателья (near, 0.98), Маталья (near, 0.99)
+   same sound : Наталье 0.08, Ноталья 0.06, Наталъя 0.02
+   similar    : Неталья* 0.98 (near, sim 0.98), Наталйя 0.35 (respell, sim 0.88), Наталйе 0.16 (respell,near, sim 0.88), Наталйй 0.16 (respell,near, sim 0.88), Натарйя 0.16 (near,respell, sim 0.87)
 
 Алексей  /aɭʲiksʲej/   а→ɑ л→ɭʲ е→i к→k с→sʲ е→e й→j
-   same sound : Аликсей*, Олексей, Алегсей, Оликсей, Алигсей, Олегсей, Олигсей
-   similar    : Адексей* (near, 0.96), Алексий* (near, 0.99), Алексех (near, 0.96), Алекфей (near, 0.97), Арексей (near, 0.98)
+   same sound : Аликсей* 1.00, Оликсей 0.18, Алигсей 0.18, Олексей 0.08, Алегсей 0.08, Олигсей 0.08, Олегсей 0.03
+   similar    : Алексий* 0.99 (near, sim 0.99), Адексей* 0.96 (near, sim 0.96), Ариксей 0.18 (near,respell, sim 0.98), Аликтей 0.18 (respell,near, sim 0.98), Алихсей 0.18 (respell,near, sim 0.99)
 
 молоко  /mʌɭʌko/   м→m о→a л→ɭ о→a к→k о→o
-   same sound : молако, малоко, малако
-   similar    : молаке* (respell,near, 0.97), малого* (respell,near, 0.93), молоке (near, 0.99), молеко (near, 0.98), мороко (near, 0.97)
+   same sound : молако 0.02, малоко 0.02, малако 0.02
+   similar    : молоке* 0.69 (near, sim 0.99), малого* 0.65 (respell,near, sim 0.93), малахо 0.02 (respell,near, sim 0.97), малаго 0.02 (respell,near, sim 0.97), малаке 0.02 (respell,near, sim 0.96)
 
 Ольга  /oɭɡa/   о→o л→ɭ ь→∅ г→ɡ а→a
-   same sound : Олга*
-   similar    : Олька* (near, 0.99), Ольге (near, 0.97), Орьга (near, 0.80), Ольха (near, 0.96), Ойьга (near, 0.95)
+   same sound : Олга* 1.00
+   similar    : Олька* 0.99 (near, sim 0.99), Орка* 0.97 (near,silent,respell, sim 0.97), Орга 0.12 (near,silent, sim 0.98), Олка 0.12 (silent,near, sim 0.99), Олха 0.12 (silent,near, sim 0.98)
 
 ################ pl ################
-stored variants by kind: homophone_deaccent=15, homophone_near=3359, homophone_respell=15511, homophone_silent=17, near_deaccent=1960, near_near=143072, near_respell=43421, near_silent=56
+stored variants by kind: homophone_deaccent=15, homophone_near=3359, homophone_respell=15511, homophone_silent=17, near_deaccent=1819, near_near=143527, near_respell=84171, near_silent=177
 
 sounds with the most spellings:
 sound    spellings (share)                       
@@ -272,27 +289,27 @@ sound    spellings (share)
 /k/ (k)  k 97%, g 2%, c 1%, q 0%, gh 0%, ck 0%   
 
 Filip  /filip/   f→f i→i l→l i→i p→p
-   same sound : Filib, Philip*, Philib
-   similar    : Pilip* (near, 0.98), Filep* (near, 0.98), Felip* (near, 0.98), Filiw* (near, 0.98), Pilib* (near,respell, 0.98)
+   same sound : Philip* 1.00, Filib 0.26, Philib 0.04
+   similar    : Phylip* 0.99 (respell,near, sim 0.99), Pilip* 0.98 (near, sim 0.98), Filep* 0.98 (near, sim 0.98), Felip* 0.98 (near, sim 0.98), Filiw* 0.98 (near, sim 0.98)
 
 Grzegorz  /ɡʒɛɡɔʃ/   g→ɡ rz→ʒ e→ɛ g→ɡ o→ɔ rz→ʃ
-   same sound : Grzegosz*, Gżegorz, Gżegosz, Grzegoż, Gżegoż, Kżegorz, Kżegosz
-   similar    : Grzegarz (near, 0.98), Grzenorz (near, 0.95), Grzogorz (near, 0.99), Grzigorz (near, 0.85), Grzegerz (near, 0.99)
+   same sound : Grzegosz* 1.00, Gżegosz 0.34, Gżegorz 0.29, Kżegosz 0.21, Gżegoż 0.16, Kżegorz 0.15, Grzegoż 0.08
+   similar    : Gżekosz 0.21 (respell,near, sim 0.99), Gżogosz 0.21 (respell,near, sim 0.99), Gżigosz 0.21 (respell,near, sim 0.99), Gżegesz 0.21 (respell,near, sim 0.99), Gżegasz 0.21 (respell,near, sim 0.98)
 
 Wójcik  /vujtɕik/   w→v ó→u j→j c→tɕ i→i k→k
-   same sound : Wujcik*, Wójciik, Wujciik, Wójcig, Wujcig, Vójcik, Wójciig, Vujcik
-   similar    : Wojcik* (deaccent, 0.98), Wójcigh (near, 0.99), Wójcyk (near, 0.97), Wyjcik (near, 0.99), Bójcik (near, 0.99)
+   same sound : Wujcik* 1.00, Wujciik 0.41, Wójciik 0.37, Wujcig 0.19, Wójciig 0.17, Vujcik 0.15, Wójcig 0.08, Vójcik 0.05
+   similar    : Wojcik* 0.98 (deaccent, sim 0.98), Wujciigh 0.24 (respell,near, sim 0.99), Wujciyk 0.24 (respell,near, sim 0.99), Wujcigh 0.19 (respell,near, sim 0.99), Bujcik 0.19 (near,respell, sim 0.99)
 
 Krzysztof  /kʃɨʃtɔf/   k→k rz→ʃ y→ɨ sz→ʃ t→t o→ɔ f→f
-   same sound : Krzysztow*, Kszysztof*, Kszysztow, Krzyrztof, Krzyrztow, Kszyrztof, Kszyrztow, Gszysztof, Krzyżtof
-   similar    : Krzysztov (near, 0.99), Krzysztaf (near, 0.98), Krzasztof (near, 0.99), Grzysztof (near, 0.99), Krzisztof (near, 0.99)
+   same sound : Krzysztow* 1.00, Kszysztof* 1.00, Kszysztow 0.41, Krzyrztow 0.38, Kszyrztow 0.35, Kszyrztof 0.28, Krzyrztof 0.25, Gszysztof 0.16
+   similar    : Kszysztaw 0.24 (respell,near, sim 0.98), Krzisztow 0.21 (near,respell, sim 0.99), Krzasztow 0.21 (near,respell, sim 0.99), Grzysztow 0.21 (near,respell, sim 0.99), Krzysztew 0.21 (near,respell, sim 0.99)
 
 Łódź  /wutɕ/   ł→w ó→u dź→tɕ
-   same sound : Łóć, Łudź, Łuć
-   similar    : Łodź (deaccent, 0.97), Lodz (deaccent, 0.84), Lódź (deaccent, 0.91), Łódz (deaccent, 0.96), Łydź (near, 0.98)
+   same sound : Łóć 0.58, Łuć 0.52, Łudź 0.46
+   similar    : Lodz* 0.84 (deaccent, sim 0.84), Juć 0.26 (near,respell, sim 0.97), Łyć 0.21 (near,respell, sim 0.98), Łoć 0.21 (near,respell, sim 0.97), Jóć 0.20 (near,respell, sim 0.97)
 
 ################ tr ################
-stored variants by kind: homophone_deaccent=10, homophone_respell=518, homophone_silent=2, near_deaccent=3623, near_near=74555, near_respell=6364, near_silent=497
+stored variants by kind: homophone_deaccent=10, homophone_respell=518, homophone_silent=2, near_deaccent=3619, near_near=74783, near_respell=7679, near_silent=607
 
 sounds with the most spellings:
 sound    spellings (share)         
@@ -304,20 +321,20 @@ sound    spellings (share)
 
 Filiz  /filɪz/   f→f i→i l→l iz→ɪz
    same sound : -
-   similar    : Feliz* (near, 0.99), Fili* (near, 0.81), Filz* (near, 0.81), Filız (near, 0.99), Filuz (near, 0.98)
+   similar    : Feliz* 0.99 (near, sim 0.99), Fili* 0.81 (near, sim 0.81), Filz* 0.81 (near, sim 0.81), Filız 0.08 (near, sim 0.99), Viliz 0.08 (near, sim 0.99)
 
 Şahin  /ʃahɪn/   ş→ʃ a→a h→h in→ɪn
    same sound : -
-   similar    : Sahin* (deaccent, 0.98), Şahın* (near, 0.99), Jahin* (near, 0.99), Şahun (near, 0.98), Şahn (near, 0.82)
+   similar    : Şahın* 0.99 (near, sim 0.99), Jahin* 0.99 (near, sim 0.99), Sahin* 0.98 (deaccent, sim 0.98), Şahun 0.08 (near, sim 0.98), Şehin 0.08 (near, sim 0.98)
 
 Yılmaz  /jɯɫmaz/   y→j ı→ɯ l→ɫ m→m a→a z→z
    same sound : -
-   similar    : Yilmaz* (deaccent, 0.99), Yılmas (near, 0.99), Yılmaj (near, 0.99), Yılmez (near, 0.98), Yılbaz (near, 0.99)
+   similar    : Yilmaz* 0.99 (deaccent, sim 0.99), Yılmas 0.08 (near, sim 0.99), Yulmaz 0.08 (near, sim 0.99), Yılmaj 0.08 (near, sim 0.99), Yılbaz 0.08 (near, sim 0.99)
 
 Gökhan  /ɟœkhan/   g→ɟ ö→œ k→k h→h a→a n→n
    same sound : -
-   similar    : Gokhan* (deaccent, 0.99), Gökkan* (near, 0.84), Gökhad (near, 0.99), Gökham (near, 0.98), Gökhen (near, 0.99)
+   similar    : Gokhan* 0.99 (deaccent, sim 0.99), Gökkan* 0.84 (near, sim 0.84), Gökhen 0.08 (near, sim 0.99), Gekhan 0.08 (near, sim 0.99), Gökhad 0.08 (near, sim 0.99)
 
 Çağlar  /tʃaːɫar/   ç→tʃ a→a ğ→ lar→ɫaɾ
-   same sound : Çağalar
-   similar    : Cağlar* (deaccent, 0.99), Caglar* (deaccent, 0.85), Çaglar* (deaccent, 0.86), Çağla* (near, 0.85), Çağler (near, 0.98)
+   same sound : Çağalar 0.02
+   similar    : Cağlar* 0.99 (deaccent, sim 0.99), Çaglar* 0.86 (deaccent, sim 0.86), Çağla* 0.85 (near, sim 0.85), Çağala* 0.85 (respell,near, sim 0.85), Caglar* 0.85 (deaccent, sim 0.85)
